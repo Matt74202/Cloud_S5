@@ -20,4 +20,11 @@ class InscriptionModel
         return $stmt->fetchAssociative();
     }
 
+    public function getById($idInscription): array{
+        $query = "SELECT * FROM Inscription WHERE idInscription = :idInscription ";
+        $stmt = $this->connection->executeQuery($query, ['idInscription' => $idInscription]);
+        return $stmt->fetchAssociative(); 
+    }
+    
+
 }

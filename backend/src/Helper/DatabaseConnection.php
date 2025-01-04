@@ -9,7 +9,7 @@ class DatabaseConnection
     public static function getConnection()
     {
         $connectionParams = [
-            'dbname' => 'releve',
+            'dbname' => 'cloud',
             'user' => 'postgres',
             'password' => 'itu16',
             'host' => 'localhost',

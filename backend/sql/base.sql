@@ -1,5 +1,5 @@
 CREATE DATABASE Cloud;
-\c Cloud
+\c cloud
 
 CREATE TABLE Role(
     id SERIAL PRIMARY KEY, 
@@ -10,14 +10,13 @@ CREATE TABLE Utilisateur(
     id SERIAL PRIMARY KEY, 
     nom VARCHAR(30),
     email VARCHAR(50) NOT NULL,
-    mdp VARCHAR(255) NOT NULL,
-    id_role INT REFERENCES Role(id)
+    mdp VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Tentative(
     id SERIAL PRIMARY KEY,
     nombre INT,
-    id_utilisateur INT REFERENCES User(id)
+    id_utilisateur INT REFERENCES Utilisateur(id)
 );
 
 CREATE TABLE Token(
@@ -29,7 +28,7 @@ CREATE TABLE Token(
 
 CREATE TABLE Pin (
     id SERIAL PRIMARY KEY,
-    id_utilisateur INT NOT NULL REFERENCES User(id),
+    id_utilisateur INT NOT NULL REFERENCES Utilisateur(id),
     pin VARCHAR(6) NOT NULL,
     date_expiration TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     date_creation TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
@@ -40,7 +39,6 @@ CREATE TABLE Inscription(
     nom VARCHAR(30),
     email VARCHAR(50) NOT NULL,
     mdp VARCHAR(255) NOT NULL,
-    id_role INT REFERENCES Role(id),
     valide boolean DEFAULT false 
 );
 

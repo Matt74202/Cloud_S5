@@ -60,6 +60,23 @@ class EmailModel
         }
     }
 
+    public function sendInscriptionEmail(int $idInscription, string $contenu): bool
+    {
+        try {
+            $inscription= $this->inscriptionModel->getById($idInscription);
+
+            if (!$inscription) {
+                throw new \RuntimeException("Inscription avec ID $idInscription introuvable.");
+            }
+
+            return $this->send($inscription['email'], $inscription['nom'], $contenu, 'Notification pour inscription');
+        } catch (PHPMailerException $e) {
+            throw new \RuntimeException("Erreur lors de l'envoi de l'email : " . $e->getMessage());
+        } catch (DBALException $e) {
+            throw $e;
+        }
+    }
+
     
 }
 ?>

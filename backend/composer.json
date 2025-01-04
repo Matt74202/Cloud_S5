@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "doctrine/migrations": "^3.8",
         "nelmio/cors-bundle": "^2.5",
+        "phpmailer/phpmailer": "^6.9",
         "symfony/console": "7.1.*",
         "symfony/dotenv": "7.1.*",
         "symfony/flex": "^2",

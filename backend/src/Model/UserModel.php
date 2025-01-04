@@ -18,7 +18,7 @@ class UserModel
 
     public function insertUser($idInscription){
         $inscription=$this->inscriptionModel->getById($idInscription);
-        $query="insert into Users(nom,email,mdp) values(:nom ,:email,:mdp)";
+        $query="insert into Utilisateur (nom,email,mdp) values(:nom ,:email,:mdp)";
         $stmt = $this->connection->executeQuery($query, ['nom' => $inscription['nom'], 'email'=>$inscription['email'] , 'mdp'=> $inscription['mdp'] ]);
     }
 

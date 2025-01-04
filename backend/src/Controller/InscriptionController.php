@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Model\EmailModel;
 use App\Model\InscriptionModel;
+use App\Model\UserModel;
 use App\Service\ResponseService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,11 +14,13 @@ class InscriptionController
     private $emailModel;
     private $inscriptionModel;
     private $responseService;
+    private $userModel;
 
     public function __construct()
     {
         $this->emailModel = new EmailModel();
         $this->inscriptionModel= new InscriptionModel();
+        $this->userModel= new UserModel($this->inscriptionModel);
         $this->responseService = new ResponseService();
     }
 
@@ -44,6 +47,19 @@ class InscriptionController
             return $this->responseService->generateResponse('error', null, 500, $e->getMessage());
         }
     }
+
+    #[Route('/api/inscription/validation/{idInscription}', name: 'valider_inscription')]
+    public function validateinscription($idInscription): JsonResponse
+    {
+        try {
+            $this->userModel->insertUser($idInscription);
+            return $this->responseService->generateResponse('success', null, 200, 'Inscription validée avec succès.');
+        } 
+        catch (\Exception $e) {
+            return $this->responseService->generateResponse('error', null, 500, 'Erreur: ' . $e->getMessage());
+        }
+    }
+
 
 }
 ?>

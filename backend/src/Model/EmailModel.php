@@ -25,10 +25,10 @@ class EmailModel
 
         $this->smtpHost = 'smtp.gmail.com';
         $this->smtpUsername = 'naly.andriamampianina2305@gmail.com';
-        $this->smtpPassword = 'vbaxuguvnyvmqkde';
+        $this->smtpPassword = 'wbdclyjrlnyuugdp';
         $this->smtpPort = 587;
         $this->smtpFromEmail = 'naly.andriamampianina2305@gmail.com';
-        $this->smtpFromName = 'Nom de l\'Expéditeur';
+        $this->smtpFromName = 'Naly Andriam';
 
         
     }
@@ -45,6 +45,14 @@ class EmailModel
             $mail->Password = $this->smtpPassword;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = $this->smtpPort;
+
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
 
             $mail->setFrom($this->smtpFromEmail, $this->smtpFromName);
             $mail->addAddress($email, $nom); 

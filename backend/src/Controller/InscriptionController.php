@@ -33,7 +33,7 @@ class InscriptionController
             $idInscription= $this->inscriptionModel->insertInscription($data['nom'], $data['email'], $data['mdp']);
             $validationLink = "http://127.0.0.1:8000/api/inscription/validation/$idInscription";
 
-            $htmlContent = file_get_contents(__DIR__ . '/templates/inscription_email.html');
+            $htmlContent = file_get_contents(__DIR__ . '/../templates/inscription_email.html');
             $htmlContent = str_replace('{{nom}}', $data['nom'], $htmlContent);
             $htmlContent = str_replace('{{validationLink}}', $validationLink, $htmlContent);
             $this->emailModel->sendInscriptionEmail($idInscription, $htmlContent);

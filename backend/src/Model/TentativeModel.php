@@ -36,7 +36,11 @@ class TentativeModel
     }
     
 
-    
-    
+    public function resetTentative($idUser){
+        $tentative = $this->getTentativeByIdUser($idUser);
+        $queryUpdate = "UPDATE Tentative SET nombre = 0 WHERE id_utilisateur = :id_utilisateur";
+        $stmt = $this->connection->executeQuery($queryUpdate, ['id_utilisateur' => $idUser]);
+    }
+
 
 }

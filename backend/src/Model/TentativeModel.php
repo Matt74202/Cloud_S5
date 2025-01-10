@@ -42,5 +42,14 @@ class TentativeModel
         $stmt = $this->connection->executeQuery($queryUpdate, ['id_utilisateur' => $idUser]);
     }
 
-
+    public function checkTentative($idUser, $contenuEmail) {
+        $tentative = $this->getTentativeByIdUser($idUser);
+    
+        if ($tentative && $tentative['nombre'] >= 3) {
+            $emailModel = new EmailModel();
+            $emailModel->sendEmail($idUser, $contenuEmail);
+        } else {
+            $this->addTentative($idUser);
+        }
+    }
 }

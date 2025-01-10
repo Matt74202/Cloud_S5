@@ -11,6 +11,7 @@ class EmailModel
 {
     private $connection;
     private $inscriptionModel;
+    private $userModel;
 
     private string $smtpHost;
     private string $smtpUsername;
@@ -22,6 +23,7 @@ class EmailModel
     public function __construct() {
         $this->connection = DatabaseConnection::getConnection();
         $this->inscriptionModel = new InscriptionModel();
+        $this->userModel= new UserModel($this->inscriptionModel);
 
         $this->smtpHost = 'smtp.gmail.com';
         $this->smtpUsername = 'naly.andriamampianina2305@gmail.com';
@@ -78,6 +80,23 @@ class EmailModel
             }
 
             return $this->send($inscription['email'], $inscription['nom'], $contenu, 'Notification pour inscription');
+        } catch (PHPMailerException $e) {
+            throw new \RuntimeException("Erreur lors de l'envoi de l'email : " . $e->getMessage());
+        } catch (DBALException $e) {
+            throw $e;
+        }
+    }
+
+    public function sendEmail($idUser, $contenu) : bool
+    {
+        try {
+            $user= $this->userModel->getById($idUser);
+
+            if (!$user) {
+                throw new \RuntimeException("User avec ID $idUser introuvable.");
+            }
+
+            return $this->send($user['email'], $user['nom'], $contenu, 'Notification pour user');
         } catch (PHPMailerException $e) {
             throw new \RuntimeException("Erreur lors de l'envoi de l'email : " . $e->getMessage());
         } catch (DBALException $e) {

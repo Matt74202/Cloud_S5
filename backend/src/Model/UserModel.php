@@ -28,24 +28,24 @@ class UserModel
         return $stmt->fetchAssociative(); 
     }
     
-    function login($mysqli, $email, $mdp) {
-        $email = $mysqli->real_escape_string($email);
-        $sql = "SELECT * FROM Users WHERE email = '$email'";
-        $result = $mysqli->query($sql);
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-            if (password_verify($mdp, $user['password'])) {
-                echo "Connexion réussie pour l'utilisateur : " . $user['email'] . "\n";
-                return $user;
-            } else {
-                echo "Mot de passe incorrect.\n";
-                return null;
-            }
-        } else {
-            echo "Aucun utilisateur trouvé avec cet email.\n";
-            return null;
+    public function login($email, $mdp): ?array
+    {
+        $query = "SELECT * FROM Utilisateur WHERE email = :email";
+        $stmt = $this->connection->executeQuery($query, ['email' => $email]);
+        $user = $stmt->fetchAssociative();
+        if ($user['mdp'] === $mdp) {
+            return $user;
+        } 
+        else {
+            return [
+                'id' => $user['id'],
+                'nom' => $user['nom'],
+                'email' => null,
+                'mdp' => null
+            ];
         }
     }
+
     public function updateUser($id, $nom, $mdp)
     {
         

@@ -48,8 +48,11 @@ class TentativeModel
         if ($tentative && $tentative['nombre'] >= 3) {
             $emailModel = new EmailModel();
             $emailModel->sendEmail($idUser, $contenuEmail);
-        } else {
+            return false;
+        } 
+        else {
             $this->addTentative($idUser);
+            return true;
         }
     }
 }

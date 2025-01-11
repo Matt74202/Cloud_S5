@@ -6,6 +6,7 @@ use App\Model\InscriptionModel;
 use App\Model\TentativeModel;
 use App\Model\UserModel;
 use App\Model\PinModel;
+use App\Model\TokenModel;
 use App\Service\ResponseService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,6 +20,7 @@ class UserController
     private $userModel;
     private $tentativeModel;
     private $pinModel;
+    private $tokenModel;
 
     public function __construct()
     {
@@ -28,6 +30,7 @@ class UserController
         $this->responseService = new ResponseService();
         $this->tentativeModel= new TentativeModel($this->userModel);
         $this->pinModel = new PinModel();
+        $this->tokenModel = new TokenModel();
     }
 
     #[Route('/api/login', name: 'login')]
@@ -68,13 +71,13 @@ class UserController
             else {
                 $pin= $this->pinModel->insertPin($idUser);
                 $pinArray= str_split($pin);
-
+                
                 $validationLink = "http://localhost:8000/api/login/$idUser/$pin";
                 $htmlContent = file_get_contents(__DIR__ . '/../templates/pin.html');
                 $htmlContent = str_replace('{{pin}}', $pin, $htmlContent);
                 $htmlContent = str_replace('{{validationLink}}', $validationLink, $htmlContent);
                 $this->emailModel->sendEmail($idUser, $htmlContent);
-
+                
                 return $this->responseService->generateResponse('success', 'Un pin a ete envoye a votre email', 200, 'Un pin a ete envoye a votre email');
             }
             
@@ -83,13 +86,14 @@ class UserController
             return $this->responseService->generateResponse('error', null, 500, $e->getMessage());
         }
     }
-
+    
     #[Route('/api/login/{idUser}/{pin}', name: 'login_confirmer')]
     public function confirmLogin($idUser, $pin): JsonResponse{
         try{
             $pin= $this->pinModel->isPinValid($idUser, $pin);
             if ($pin){
-                return $this->responseService->generateResponse('success', 'Pin correct, login valide', 200, 'Pin correct, login valide');
+                $token= $this->tokenModel->generateToken($idUser);
+                return $this->responseService->generateResponse('success', $token, 200, 'Pin correct, login valide');
             } 
             else{
                 return $this->responseService->generateResponse('error', null, 500, 'Pin incorrect ou invalide');

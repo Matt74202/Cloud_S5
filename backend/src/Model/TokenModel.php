@@ -1,5 +1,9 @@
 <?php
+namespace App\Model;
+
 use App\Helper\DatabaseConnection;
+use \DateTime;
+
 class TokenModel
 {
     private $connection;
@@ -9,38 +13,29 @@ class TokenModel
         $this->connection = DatabaseConnection::getConnection();
     }
 
-    public function insert(string $token,$date_creation,$date_expiration): int
+    public function insert($token, $date_creation, $date_expiration): int
     {
-        try {
-            $query = "INSERT INTO token (token, date_creation, date_expiration) VALUES (:token, :date_creation, :date_expiration)";
-            $stmt = $this->connection->executeQuery($query, ['token' => $token['token'], 'date_creation'=>$date_creation , 'date_expiration'=> $date_expiration)];
-            return (int)$this->connection->lastInsertId(); 
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $query = "INSERT INTO Token (token, date_creation, date_expiration) VALUES (:token, :date_creation, :date_expiration)";
+        $stmt = $this->connection->executeQuery($query, ['token' => $token, 'date_creation'=>$date_creation , 'date_expiration'=> $date_expiration]);
+        return (int)$this->connection->lastInsertId(); 
     }
 
     public function getById(int $id): ?array
     {
-        try {
-            $query = "SELECT * FROM token WHERE id = :id";
-            $stmt= $this->connection->executeQuery($query,['id' =>$id]); 
-                return $stmt->fetchAssociative(); 
-        } catch (Exception $e) {
-            throw $e;
-        }
+
+        $query = "SELECT * FROM Token WHERE id = :id";
+        $stmt= $this->connection->executeQuery($query,['id' =>$id]); 
+        return $stmt->fetchAssociative(); 
     }
-    public function generateToken(int $idUser): int
+    
+    public function generateToken(int $idUser)
     {
-        try {
+        $token = bin2hex(random_bytes(32));
+        $date_creation = (new DateTime())->format('Y-m-d H:i:s');
+        $date_expiration = (new DateTime('+1 hour'))->format('Y-m-d H:i:s');
 
-            $token = bin2hex(random_bytes(32));
-            $date_creation = new DateTime();
-            $date_expiration = new DateTime('+1 hour');
-
-            return $this->insert($token, $date_creation, $date_expiration);
-        } catch (Exception $e) {
-            throw $e;
-        }
+        $id= $this->insert($token, $date_creation, $date_expiration);
+        return $this->getById($id);
     }
 }
+?>

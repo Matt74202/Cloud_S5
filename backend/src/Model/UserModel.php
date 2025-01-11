@@ -53,11 +53,9 @@ class UserModel
 
     public function updateUser($id, $nom, $mdp)
     {
-        
-            $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
-            $query = "UPDATE users SET nom = :nom, mdp = :mdp' WHERE id = :id";
-            $result = $this->connection->executeQuery($query,['nom' => $nom, 'mdp' => $mdp]);
-            return $result;
-        
+        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
+        $query = "UPDATE Utilisateur SET nom = :nom, mdp = :mdp WHERE id = :id";
+        $result = $this->connection->executeQuery($query,['nom' => $nom, 'mdp' => $mdp, 'id' => $id]);
+        return $result;
     }
 }

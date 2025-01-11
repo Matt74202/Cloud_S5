@@ -103,5 +103,24 @@ class UserController
         }
     }
 
+    #[Route('/api/user/update/{idUser}', name: 'login_confirmer')]
+    public function updateData($idUser, Request $request): JsonResponse{
+        try{
+            $data = json_decode($request->getContent(), true);
+            if (empty($data['nom']) || empty($data['mdp'])) {
+                return $this->responseService->generateResponse('error', null, 400, 'Veuillez remplir tous les champs.');
+            }
+
+            $update= $this->userModel->updateUser($idUser, $data['nom'], $data['mdp']);
+            if ($update){
+                return $this->responseService->generateResponse('success', null, 200, 'Informations modifiees');
+            }
+            return $this->responseService->generateResponse('error', null, 500, 'Erreur lors de la modification des informations');
+        }
+        catch (\Exception $e) {
+            return $this->responseService->generateResponse('error', null, 500, 'Erreur: ' . $e->getMessage());
+        }
+    }
+
 }
 ?>

@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\nalya\\OneDrive\\Bureau\\IT\\jar\\gson-2.2.2.jar",
+        "c:\\Users\\nalya\\OneDrive\\Bureau\\IT\\jar\\servlet-api.jar"
+    ]
+}

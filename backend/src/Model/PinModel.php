@@ -25,7 +25,7 @@ class PinModel {
         return $pin;
     }
 
-    public function getByPin($pin): array {
+    public function getByPin($pin){
         $query = "SELECT * FROM Pin WHERE pin = :pin AND date_expiration > :current_date";
         $currentDate= (new DateTime())->format('Y-m-d H:i:s');
         $stmt = $this->connection->executeQuery($query, [
@@ -37,8 +37,10 @@ class PinModel {
     
     public function isPinValid ($idUser, $pin){
         $pin= $this->getByPin($pin);
-        if ($pin['id_utilisateur']==$idUser){
-            return true;
+        if($pin){
+            if ($pin['id_utilisateur']==$idUser){
+                return true;
+            }
         }
         return false;
     }

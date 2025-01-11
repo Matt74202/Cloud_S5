@@ -1,7 +1,9 @@
 <?php
 namespace App\Model;
 
+use \DateTime;
 use App\Helper\DatabaseConnection;
+
 class PinModel {
     private $connection;
 
@@ -17,39 +19,29 @@ class PinModel {
     function insertPin($idUser){
         $pin= $this->genererPinAleatoire();
         $creation = date('Y-m-d H:i:s');
-        $expiration = date('Y-m-d H:i:s', strtotime('+1 minute')); 
-        $query= "INSERT INTO Pin (id_utilisateur, pin, date_expiration, date_creation) values(:idUser, :pin, :creation, :expiration)";
+        $expiration = date('Y-m-d H:i:s', strtotime('+5 minute')); 
+        $query= "INSERT INTO Pin (id_utilisateur, pin, date_creation, date_expiration) values(:idUser, :pin, :creation, :expiration)";
         $stmt = $this->connection->executeQuery($query, ['idUser' =>$idUser, 'pin'=>$pin , 'creation'=> $creation, 'expiration'=> $expiration]);
         return $pin;
     }
 
-    // function getByPin($mysqli, $pin) {
-    //     $pin = $mysqli->real_escape_string($pin);
-    //     $sql = "SELECT * FROM Pins WHERE pin = '$pin'";
-    //     $result = $mysqli->query($sql);
-    //     if ($result->num_rows > 0) {
-    //         $data = $result->fetch_assoc();
-    //         $current_time = date('Y-m-d H:i:s');
-    //         if ($current_time <= $data['date_expiration']) {
-    //             echo "PIN valide pour l'utilisateur : " . $data['id_user'] . "\n";
-    //             return $data;
-    //         } else {
-    //             echo "Le PIN a expiré.\n";
-    //             return null;
-    //         }
-    //     } else {
-    //         echo "PIN incorrect.\n";
-    //         return null;
-    //     }
-    // }
-
-    public function getByPin ($pin): array{
-        $query = "SELECT * FROM Pin WHERE pin = :pin AND date_expiration > ?";
-        $stmt = $this->connection->executeQuery($query, ['pin' => $pin, new DateTime()]);
-        return $stmt->fetchAssociative(); 
+    public function getByPin($pin): array {
+        $query = "SELECT * FROM Pin WHERE pin = :pin AND date_expiration > :current_date";
+        $currentDate= (new DateTime())->format('Y-m-d H:i:s');
+        $stmt = $this->connection->executeQuery($query, [
+            'pin' => $pin,
+            'current_date' => (new DateTime())->format('Y-m-d H:i:s')
+        ]);
+        return $stmt->fetchAssociative();
     }
-
-
+    
+    public function isPinValid ($idUser, $pin){
+        $pin= $this->getByPin($pin);
+        if ($pin['id_utilisateur']==$idUser){
+            return true;
+        }
+        return false;
+    }
 
 
 }    

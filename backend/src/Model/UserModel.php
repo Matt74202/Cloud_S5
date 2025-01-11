@@ -22,9 +22,9 @@ class UserModel
         $stmt = $this->connection->executeQuery($query, ['nom' => $inscription['nom'], 'email'=>$inscription['email'] , 'mdp'=> $inscription['mdp'] ]);
     }
 
-    public function getById($idInscription): array{
-        $query = "SELECT * FROM Inscription WHERE idInscription = :idInscription ";
-        $stmt = $this->connection->executeQuery($query, ['idInscription' => $idInscription]);
+    public function getById($idUser): array{
+        $query = "SELECT * FROM Utilisateur WHERE id = :idUser ";
+        $stmt = $this->connection->executeQuery($query, ['idUser' => $idUser]);
         return $stmt->fetchAssociative(); 
     }
     
@@ -33,18 +33,23 @@ class UserModel
         $query = "SELECT * FROM Utilisateur WHERE email = :email";
         $stmt = $this->connection->executeQuery($query, ['email' => $email]);
         $user = $stmt->fetchAssociative();
+
+        if (!$user) {
+            return null; 
+        }
+
         if ($user['mdp'] === $mdp) {
             return $user;
         } 
-        else {
-            return [
-                'id' => $user['id'],
-                'nom' => $user['nom'],
-                'email' => null,
-                'mdp' => null
-            ];
-        }
+
+        return [
+            'id' => $user['id'],
+            'nom' => $user['nom'],
+            'email' => null,
+            'mdp' => null
+        ];
     }
+
 
     public function updateUser($id, $nom, $mdp)
     {

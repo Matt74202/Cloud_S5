@@ -32,7 +32,6 @@
             align-items: center;
             font-size: 1.5em;
             font-weight: bold;
-            background-color: black; /* Fond noir */
         }
 
         .countdown {
@@ -54,6 +53,8 @@
     <div class="container">
         <h1>Votre Code PIN</h1>
         <p>Veuillez utiliser le code PIN ci-dessous pour vérifier votre identité :</p>
+
+        <p>{{pin}}</p>
         <div class="pin-container">
             <div class="pin-box">1</div>
             <div class="pin-box">2</div>
@@ -68,7 +69,7 @@
         </div>
         <div class="text-div">
             <p>Ou cliquez directement sur ce lien</p>
-            <p><a href="{{validationLink}}">Reinitialiser mes tentatives</a></p>
+            <p><a href="{{validationLink}}">Valider mon login</a></p>
         </div>
     </div>
     <script>

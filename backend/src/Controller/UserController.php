@@ -95,6 +95,7 @@ class UserController
                 return $this->responseService->generateResponse('success', $token, 200, 'Pin correct, login valide');
             } 
             else{
+                $this->tentativeModel->addTentative($idUser);
                 return $this->responseService->generateResponse('error', null, 500, 'Pin incorrect ou invalide');
             } 
         }

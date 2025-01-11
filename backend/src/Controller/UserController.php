@@ -44,7 +44,6 @@ class UserController
             $email= $data['email'];
             $mdp= $data['mdp'] ;
             $user= $this->userModel->login($email, $mdp);
-            // return $this->responseService->generateResponse('success', $user, 500, 'Email incorrect');
             
             if (!$user){
                 return $this->responseService->generateResponse('error', null, 500, 'Email incorrect');
@@ -53,10 +52,10 @@ class UserController
 
             
             if ($user['email']==null){              //mdp incorrect
+                //return $this->responseService->generateResponse('error', null, 500, 'Mdp incorrect');
 
-                $validationLink = "http://127.0.0.1:8000/api/tentative/reset/$idUser";
+                $validationLink = "http://localhost:8000/api/tentative/reset/$idUser";
                 $htmlContent = file_get_contents(__DIR__ . '/../templates/tentative.html');
-                $htmlContent = str_replace('{{nom}}', $user['nom'], $htmlContent);
                 $htmlContent = str_replace('{{validationLink}}', $validationLink, $htmlContent);
     
                 $check= $this->tentativeModel->checkTentative($idUser, $htmlContent);
@@ -65,7 +64,7 @@ class UserController
                     return $this->responseService->generateResponse('error', null, 500, 'Mot de passe incorrect');
                 }
                 else {
-                    return $this->responseService->generateResponse('error', null, 500, 'Mot de passe incorrect et nombre de tentatives autorise depasse, veuillez verifier votre email pour reinitialiser');
+                    return $this->responseService->generateResponse('error', null, 500, 'Nombre de tentatives depasse, veuillez verifier votre email pour reinitialiser');
                 }
             }
             else {
@@ -103,7 +102,6 @@ class UserController
             return $this->responseService->generateResponse('error', null, 500, 'Erreur: ' . $e->getMessage());
         }
     }
-
 
 }
 ?>

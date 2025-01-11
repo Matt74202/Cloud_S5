@@ -17,8 +17,8 @@ class TentativeModel
     }
 
     public function getTentativeByIdUser($idUser) {
-        $query = "SELECT nombre FROM Tentative WHERE id_utilisateur = :id_utilisateur";
-        $stmt= $this->connection->executeQuery($query, ['idUser' => $idUser]);
+        $query = "SELECT * FROM Tentative WHERE id_utilisateur = :id_utilisateur";
+        $stmt= $this->connection->executeQuery($query, ['id_utilisateur' => $idUser]);
         return $stmt->fetchAssociative();
     }
     

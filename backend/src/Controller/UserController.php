@@ -41,20 +41,23 @@ class UserController
             $email= $data['email'];
             $mdp= $data['mdp'] ;
             $user= $this->userModel->login($email, $mdp);
-            $idUser= $user['id'];
-
+            // return $this->responseService->generateResponse('success', $user, 500, 'Email incorrect');
+            
             if (!$user){
                 return $this->responseService->generateResponse('error', null, 500, 'Email incorrect');
             }
+            $idUser= $user['id'];
 
-            $validationLink = "http://127.0.0.1:8000/api/tentative/reset/$idUser";
-            $htmlContent = file_get_contents(__DIR__ . '/../templates/tentative.html');
-            $htmlContent = str_replace('{{nom}}', $user['nom'], $htmlContent);
-            $htmlContent = str_replace('{{validationLink}}', $validationLink, $htmlContent);
+            
+            if ($user['email']==null){              //mdp incorrect
 
-            $check= $this->tentativeModel->checkTentative($idUser, $htmlContent);
+                $validationLink = "http://127.0.0.1:8000/api/tentative/reset/$idUser";
+                $htmlContent = file_get_contents(__DIR__ . '/../templates/tentative.html');
+                $htmlContent = str_replace('{{nom}}', $user['nom'], $htmlContent);
+                $htmlContent = str_replace('{{validationLink}}', $validationLink, $htmlContent);
+    
+                $check= $this->tentativeModel->checkTentative($idUser, $htmlContent);
 
-            if ($user['email']==null){
                 if ($check){
                     return $this->responseService->generateResponse('error', null, 500, 'Mot de passe incorrect');
                 }
@@ -64,14 +67,15 @@ class UserController
             }
             else {
                 $pin= $this->pinModel->insertPin($idUser);
+                $pinArray= str_split($pin);
 
-                $validationLink = "http://127.0.0.1:8000/api/login/$pin";
+                $validationLink = "http://localhost:8000/api/login/$idUser/$pin";
                 $htmlContent = file_get_contents(__DIR__ . '/../templates/pin.html');
                 $htmlContent = str_replace('{{pin}}', $pin, $htmlContent);
                 $htmlContent = str_replace('{{validationLink}}', $validationLink, $htmlContent);
                 $this->emailModel->sendEmail($idUser, $htmlContent);
 
-                return $this->responseService->generateResponse('success', null, 200, 'Un pin a ete envoye a votre email');
+                return $this->responseService->generateResponse('success', 'Un pin a ete envoye a votre email', 200, 'Un pin a ete envoye a votre email');
             }
             
         }
@@ -80,12 +84,12 @@ class UserController
         }
     }
 
-    #[Route('/api/login/{pin}', name: 'login_confirmer')]
-    public function confirmLogin($pin): JsonResponse{
+    #[Route('/api/login/{idUser}/{pin}', name: 'login_confirmer')]
+    public function confirmLogin($idUser, $pin): JsonResponse{
         try{
-            $pin= $this->pinModel->getByPin($pin);
+            $pin= $this->pinModel->isPinValid($idUser, $pin);
             if ($pin){
-                return $this->responseService->generateResponse('success', null, 200, 'Pin correct, login valide');
+                return $this->responseService->generateResponse('success', 'Pin correct, login valide', 200, 'Pin correct, login valide');
             } 
             else{
                 return $this->responseService->generateResponse('error', null, 500, 'Pin incorrect ou invalide');

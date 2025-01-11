@@ -104,7 +104,7 @@ class UserController
         }
     }
 
-    #[Route('/api/user/update/{idUser}', name: 'login_confirmer')]
+    #[Route('/api/user/update/{idUser}', name: 'user_data_update')]
     public function updateData($idUser, Request $request): JsonResponse{
         try{
             $data = json_decode($request->getContent(), true);

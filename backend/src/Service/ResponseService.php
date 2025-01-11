@@ -17,7 +17,8 @@ class ResponseService
         $response = [
             'status' => $status,
             'data' => $data,
-            'error' => $error
+            'error' => $error,
+            'message' => $message
         ];
 
         return new JsonResponse($response, $code);

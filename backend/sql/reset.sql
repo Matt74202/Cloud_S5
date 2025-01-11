@@ -19,3 +19,14 @@ BEGIN
     ALTER SEQUENCE pin_id_seq RESTART WITH 1;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION reset_tentative() 
+RETURNS void AS $$
+BEGIN
+    -- Supprimer toutes les lignes dans la table Inscription
+    DELETE FROM Tentative;
+
+    -- Réinitialiser l'incrémentation de l'ID (la séquence)
+    ALTER SEQUENCE tentative_id_seq RESTART WITH 1;
+END;
+$$ LANGUAGE plpgsql;

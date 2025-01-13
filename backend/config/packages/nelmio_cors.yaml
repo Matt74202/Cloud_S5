@@ -1,12 +1,13 @@
 nelmio_cors:
     defaults:
-        allow_origin: ['http://localhost:5173'] 
-        allow_methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE']
+        allow_credentials: true
+        allow_origin: ['http://localhost:8083']  # L'origine autorisée
         allow_headers: ['Content-Type', 'Authorization']
-        expose_headers: ['Authorization']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE']
         max_age: 3600
     paths:
-        '^/api/': # Activer CORS uniquement pour les routes commençant par /api/
-            allow_origin: ['http://localhost:5173']
-            allow_headers: ['*']
-            allow_methods: ['*']
+        '^/api/':  # Chemin des routes API
+            allow_origin: ['http://localhost:8083']  # Autoriser l'origine du frontend
+            allow_headers: ['Content-Type', 'Authorization']
+            allow_methods: ['GET', 'POST', 'PUT', 'DELETE']
+            allow_credentials: true

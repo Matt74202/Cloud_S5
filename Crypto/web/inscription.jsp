@@ -5,9 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Lien vers Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJv3+MQE2w5bNGUwCzRXYC3k1ke5NfEXyZtLl0EOV2jjwOpgI6UMCzBdX7AX" crossorigin="anonymous">
+    <title>Inscription</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="assets/js/app.js"> </script>
+<!-- Lien vers Bootstrap CDN sans l'attribut 'integrity' -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             background-color: #000;
@@ -50,21 +53,25 @@
         }
     </style>
 </head>
-<body>
+<body ng-app="myApp" ng-controller="InscriptionController">
 
     <div class="container">
         <div class="login-container">
-            <h2 class="text-center mb-4">Connexion</h2>
-            <form action="./LoginController" method="post">
+            <h2 class="text-center mb-4">Inscription</h2>
+            <form ng-submit="submitForm()">
+                <div class="mb-3 form-group">
+                    <label for="email" class="form-label">Nom</label>
+                    <input type="text" class="form-control" id="nom" ng-model="formData.nom" required>
+                </div>
                 <div class="mb-3 form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" ng-model="formData.email" required>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="password" class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" id="password" ng-model="formData.mdp" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
             </form>
         </div>
     </div>

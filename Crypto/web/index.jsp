@@ -1,1 +1,1 @@
-<%@ include file="login.jsp" %>
+<%@ include file="inscription.jsp" %>

@@ -10,9 +10,9 @@ class DatabaseConnection
     {
         $connectionParams = [
             'dbname' => 'cloud',
-            'user' => 'postgres',
-            'password' => 'itu16',
-            'host' => 'localhost',
+            'user' => 'cloud',
+            'password' => 'cloud',
+            'host' => 'db',
             'driver' => 'pdo_pgsql',
         ];
 

@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../font/static/Montserrat-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('../font/static/Montserrat-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: linear-gradient(135deg, #050305, #8F37B1);
+    font-family: 'Montserrat';
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+.login-card {
+    background-color: #050305;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.login-card h3 {
+    text-align: center;
+    color: #8F37B1;
+    margin-bottom: 1.5rem;
+    font-family: 'Montserrat Bold';
+}
+.form-control {
+    background-color: #36123F;
+    border: none;
+    color: white;
+}
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+.btn-primary {
+    background-color: #8F37B1;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #624343;
+}
+p{
+    font-size: smaller;
+}

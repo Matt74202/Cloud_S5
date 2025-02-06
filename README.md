@@ -3,14 +3,16 @@ Membres:
     - ANDRIAMAMPIANINA Naly Malala Fitiavana, ETU001749
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
-I- FOURNISSEUR D'IDENTITE
+I- FOURNISSEUR D'IDENTITE (code dans backend)
     1- Installer les images docker avec 'docker-compose up --build'
     2- La base aura comme user:'cloud', mot de passe:'cloud', database:'cloud'. 
        Les details sur les tables se trouvent dans backend/sql/base.sql
     3- Installer les dependances dans vendor avec:   
         . docker exec -it backend-app-1 bash
         . composer install
-
+    4- Email de test: 
+        email: "usercloudexemple@gmail.com"
+        mdp: "testcloud2025"
 
 ROUTES POSTMAN :
     - Inscription

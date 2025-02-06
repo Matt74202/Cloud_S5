@@ -53,14 +53,6 @@ CREATE TABLE TypeAnalyse(
     type VARCHAR(30)
 );
 
-CREATE TABLE Analyse(
-    id SERIAL PRIMARY KEY,
-    id_type INT REFERENCES TypeAnalyse(id),
-    id_crypto INT REFERENCES Crypto(id),
-    date_min TIMESTAMP,
-    date_max TIMESTAMP
-);
-
 CREATE TABLE Commission(
     id SERIAL PRIMARY KEY,
     pourcentage_vente DECIMAL,

@@ -1,5 +1,5 @@
-CREATE DATABASE Cloud;
-\c cloud
+-- CREATE DATABASE Cloud;
+-- \c cloud
 
 CREATE TABLE Role(
     id SERIAL PRIMARY KEY, 

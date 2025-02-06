@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../font/static/Montserrat-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('../font/static/Montserrat-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Add a bit of margin to move the p element closer to the button */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #121212;
+    font-family: 'Montserrat';
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 0.4em;
+    background-color: #171717;
+    border-radius: 25px;
+    width: 20%;
+    transition: border 0.4s ease-in-out;
+}
+
+#formAuth{
+    width: 30%;
+}
+
+#heading {
+    text-align: center;
+    margin: 2em;
+    color: rgb(255, 255, 255);
+    font-size: 1.2em;
+    font-family: 'Montserrat Bold';
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 25px;
+    padding: 0.6em;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #171717;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+.input-icon {
+    height: 1.3em;
+    width: 1.3em;
+    fill: white;
+}
+
+.input-field {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #d3d3d3;
+}
+
+.form .btn {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 2.5em;
+}
+
+.button3 {
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    transition: .4s ease-in-out;
+    background-color: #252525;
+    color: white;
+    font-family: 'Montserrat';
+}
+
+.button3:hover {
+    background-color: blue;
+    color: white;
+}
+
+.login-p {
+    color: white;
+    font-size: x-small;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.login-p a {
+    color: blue;
+}

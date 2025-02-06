@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mouvementApp" ng-controller="MouvementController">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/contenu.css" rel="stylesheet">
+    <link href="../css/menu.css" rel="stylesheet">
+
+    <title>Liste Mouvement</title>
+</head>
+<body>
+    <div id="menu-container"></div>
+
+    <form action="./MouvementServlet" method="get">
+        <div class="recherche-produits row g-3" id="contenu">
+            <div class="col-md-3" id="input-recherche">
+                <label style="color: white;">Date max: </label>
+                <input type="date" placeholder="date1" name="date2" class="form-control">
+            </div>
+
+            <div class="col-md-3" id="input-recherche" style="padding-top: 30px;">
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="tableau">
+        <table class="table table">
+            <thead>
+                <tr>
+                    <th scope="col">Utilisateur</th>
+                    <th scope="col">Total Achat</th>
+                    <th scope="col">Total Vente</th>
+                    <th scope="col">Valeur portefeuille</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Utilisation de ng-repeat pour générer les lignes de tableau -->
+                <tr ng-repeat="user in utilisateurs">
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.totalAchat | currency }}</td>
+                    <td>{{ user.totalVente | currency }}</td>
+                    <td>{{ user.valeurPortefeuille | currency }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/angular/angular.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Déclaration de l'application AngularJS
+        var app = angular.module('mouvementApp', []);
+
+        // Contrôleur pour gérer les mouvements
+        app.controller('MouvementController', function($scope) {
+            // Liste des utilisateurs avec leurs informations
+            $scope.utilisateurs = [
+                { nom: 'User 1', totalAchat: 1500, totalVente: 2000, valeurPortefeuille: 5000 },
+                { nom: 'User 2', totalAchat: 1000, totalVente: 1200, valeurPortefeuille: 4500 },
+                { nom: 'User 3', totalAchat: 2000, totalVente: 2500, valeurPortefeuille: 7000 },
+                { nom: 'User 4', totalAchat: 1300, totalVente: 1500, valeurPortefeuille: 5200 },
+                { nom: 'User 5', totalAchat: 1700, totalVente: 2100, valeurPortefeuille: 6200 },
+                { nom: 'User 6', totalAchat: 1600, totalVente: 1800, valeurPortefeuille: 5600 },
+                { nom: 'User 7', totalAchat: 1400, totalVente: 1600, valeurPortefeuille: 5400 },
+                { nom: 'User 8', totalAchat: 1100, totalVente: 1400, valeurPortefeuille: 4700 },
+                { nom: 'User 9', totalAchat: 1800, totalVente: 2300, valeurPortefeuille: 6300 },
+                { nom: 'User 10', totalAchat: 1900, totalVente: 2400, valeurPortefeuille: 6800 }
+            ];
+        });
+
+        // Charger le menu
+        fetch('../menu.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('menu-container').innerHTML = data;
+        });
+    </script>
+</body>
+</html>

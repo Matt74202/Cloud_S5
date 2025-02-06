@@ -1,0 +1,347 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../font/static/Montserrat-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat Bold';
+  src: url('../font/static/Montserrat-Black.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans Italic';
+  src: url('../font/static/DMSans_18pt-SemiBoldItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('../font/static/DMSans_18pt-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-color: #171717;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.box {
+  background-color: #121212;
+  border-radius: 8px;
+  padding: 20px;
+  width: 48%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  margin-right: 10px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-family: 'DM Sans Italic';
+}
+
+.box p {
+  margin: 0 0 10px;
+  line-height: 1.6;
+  font-family: 'DM Sans';
+}
+
+.portfolio {
+  background-color: #121212;
+  color: white;
+}
+
+select {
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* formulaires */
+.formulaire {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 100px;
+}
+
+.formulaire h1 {
+  font-family: 'DM Sans Italic';
+  color: #ffcc00db;
+}
+
+.formulaire input, .formulaire select {
+  background-color: #222;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.formulaire button {
+  margin-top: 10px;
+  background-color: #ffcc009a;
+  border-color: #ffcc009a;
+  font-family: 'DM Sans Italic';
+}
+
+.formulaire button:hover {
+  margin-top: 10px;
+  background-color: #ffcc00db;
+  border-color: #ffcc00;
+}
+
+.formulaire label {
+  color: #ffcc00;
+  font-size: smaller;
+  text-transform: capitalize;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.titre {
+  color: #ffcc00db;
+  text-align: center;
+  margin-top: 100px;
+  font-size: 2.5rem;
+  font-family: 'DM Sans Italic';
+}
+
+.crypto-box {
+  background-color: #121212;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'DM Sans';
+}
+
+.crypto-name {
+  font-size: 1.2rem;
+  color: #ffcc009a;
+  margin-bottom: 10px;
+}
+
+.crypto-price {
+  font-size: 1.5rem;
+  color: #ffcc00;
+}
+
+#menu-container {
+  margin-bottom: 20px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.crypto-box {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.evaluation-btn {
+  background-color: #ffcc00;
+  color: #333;
+  width: 100%;
+}
+
+.evaluation-btn:hover {
+  background-color: #ffcc00dc;
+  color: #333;
+  width: 100%;
+}
+
+canvas {
+  background-color: #444;
+  border-radius: 10px;
+}
+
+.recherche-produits {
+  font-family: 'DM Sans';
+  padding-top: 10px; 
+  padding-bottom: 10px;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  gap: 10px; 
+  flex-wrap: nowrap; /* Évite de diviser les éléments */
+  margin-top: 100px;
+  width: 62%;
+  margin-left: auto;
+  margin-right: auto; /* Centrer le div sur la page */
+}
+
+
+#input-recherche {
+  padding: 0;
+}
+
+.recherche-produits select, .recherche-produits input, .recherche-produits button {
+  min-width: 200px;
+}
+
+.recherche-produits button {
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  font-family: 'DM Sans Italic';
+  text-transform: capitalize;
+  margin-bottom: 10px;
+}
+
+.recherche-produits .btn-primary:hover {
+  background-color: #ffcc00dc; 
+  border-color: #ffcc00dc;
+  color: white; 
+}
+
+.recherche-produits label {
+  color: #ffcc00dc;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+
+.tableau {
+  margin-right: 50px;
+  margin-left: 50px;
+  color: white;
+  font-family: 'DM Sans';
+  overflow-x: auto;
+  border-radius: 5px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th, .table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #333;
+  color: #ffcc00;
+}
+
+.table td {
+  background-color: #222;
+  color: white;
+  border-bottom: 1px solid #555;
+}
+
+.checkbox-container {
+  font-family: 'DM Sans';
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto; 
+  flex-wrap: wrap;
+}
+
+/* Style par défaut pour cacher le checkbox natif */
+input[type="checkbox"].custom-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Créer un style personnalisé pour les checkbox */
+input[type="checkbox"].custom-checkbox + label::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  background-color: white; /* Couleur de base de la checkbox */
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+input[type="checkbox"].custom-checkbox:checked + label::before {
+  background-color: #ffcc00dc; 
+  border-color: #ffcc00dc;
+}
+
+input[type="checkbox"].custom-checkbox:checked + label::after {
+  content: '\2714'; /* Symbole de coche */
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  color: white;
+  font-size: 16px;
+}
+
+#recherche-analyse button{
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffcc00;
+  border-color: #ffcc00;
+  width: 200px;
+  margin-top: 20px;
+}
+
+.resultat{
+  background-color: #333;
+  border-color: #333;
+  border-radius: 10px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
+.resultat-titre{
+  font-family: 'DM Sans Italic';
+  color: #ffcc00;
+  border-bottom: #ffcc00;
+}
+
+
+
+

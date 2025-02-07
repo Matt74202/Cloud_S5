@@ -1,13 +1,14 @@
+# config/packages/nelmio_cors.yaml
 nelmio_cors:
     defaults:
         allow_credentials: true
-        allow_origin: ['http://localhost:8083']  # L'origine autorisée
+        allow_origin: ['http://localhost:8088']
         allow_headers: ['Content-Type', 'Authorization']
-        allow_methods: ['GET', 'POST', 'PUT', 'DELETE']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] # ← Ajouter OPTIONS
         max_age: 3600
     paths:
-        '^/api/':  # Chemin des routes API
-            allow_origin: ['http://localhost:8083']  # Autoriser l'origine du frontend
+        '^/api':
+            allow_origin: ['http://localhost:8088']
             allow_headers: ['Content-Type', 'Authorization']
-            allow_methods: ['GET', 'POST', 'PUT', 'DELETE']
+            allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'] # ← Ajouter ici aussi
             allow_credentials: true

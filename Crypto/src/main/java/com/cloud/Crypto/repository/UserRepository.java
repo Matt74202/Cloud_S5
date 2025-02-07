@@ -90,6 +90,11 @@ public class UserRepository {
         String sql = "SELECT * FROM Utilisateur WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, getUserRowMapper(), id);
     }
+
+    public double getValeurPortefeuille (int id) {
+        String sql= "SELECT valeur_totale FROM v_portefeuille_user WHERE utilisateur_id=?";
+        return jdbcTemplate.queryForObject(sql, Double.class, id);
+    }
     
 
 

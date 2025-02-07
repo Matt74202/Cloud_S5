@@ -54,6 +54,12 @@ public class UserController {
         return ResponseEntity.ok(portefeuille);
     }
 
+    @GetMapping("/{userId}/portefeuille/valeur")
+    public ResponseEntity<Double> getUserPortefeuilleValeur(@PathVariable int userId) {
+        Double valeur = userService.getValeurPortefeuille(userId);
+        return ResponseEntity.ok(valeur);
+    }
+
     @GetMapping("/{userId}/fond")
     public ResponseEntity<Fond> getUserFond(@PathVariable int userId) {
         Fond fond = userService.getFond(userId);

@@ -41,4 +41,8 @@ public class UserService {
     public List<User> getAll(){
         return userRepository.getAll();
     }
+
+    public double getValeurPortefeuille(int idUser){
+        return userRepository.getValeurPortefeuille(idUser);
+    }
 }

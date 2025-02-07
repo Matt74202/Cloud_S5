@@ -1,111 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/contenu.css" rel="stylesheet">
     <link href="../css/menu.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="../js/CoursController.js"></script>
     <title>Cours</title>
 </head>
-<body>
+<body ng-controller="CoursController">
     <div id="menu-container"></div>
 
     <h1 class="titre">Cours en temps reel</h1>
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-sm-6" ng-repeat="crypto in cryptos">
                 <div class="crypto-box">
-                    <div class="crypto-name">Bitcoin</div>
-                    <div class="crypto-price" id="bitcoin">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Ethereum</div>
-                    <div class="crypto-price" id="ethereum">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Ripple</div>
-                    <div class="crypto-price" id="ripple">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Litecoin</div>
-                    <div class="crypto-price" id="litecoin">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Chainlink</div>
-                    <div class="crypto-price" id="chainlink">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Cardano</div>
-                    <div class="crypto-price" id="cardano">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Polkadot</div>
-                    <div class="crypto-price" id="polkadot">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Stellar</div>
-                    <div class="crypto-price" id="stellar">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Dogecoin</div>
-                    <div class="crypto-price" id="dogecoin">Loading...</div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="crypto-box">
-                    <div class="crypto-name">Solana</div>
-                    <div class="crypto-price" id="solana">Loading...</div>
+                    <div class="crypto-name">{{ crypto.nom }}</div>
+                    <div class="crypto-price" id="bitcoin">${{ crypto.valeur | number:2 }}</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        const cryptos = ['bitcoin', 'ethereum', 'ripple', 'litecoin', 'chainlink', 'cardano', 'polkadot', 'stellar', 'dogecoin', 'solana'];
-
-        function fetchPrices() {
-            cryptos.forEach(crypto => {
-                fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=usd`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById(crypto).textContent = `$${data[crypto].usd}`;
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-            });
-        }
-
-        // Fetch prices every 10 seconds
-        setInterval(fetchPrices, 10000);
-        fetchPrices(); // Initial fetch
-    </script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         fetch('../menu.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('menu-container').innerHTML = data;
-        });
+            .then(response => response.text())
+            .then(data => {
+                var menuContainer = document.getElementById('menu-container');
+                menuContainer.innerHTML = data;
+
+                var $scope = angular.element(menuContainer).scope();
+                angular.element(menuContainer).injector().get('$compile')(menuContainer)($scope);
+
+                $scope.$digest();
+            });
     </script>
 </body>
 </html>

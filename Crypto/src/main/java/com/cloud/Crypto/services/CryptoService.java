@@ -15,16 +15,12 @@ public class CryptoService {
         this.cryptoRepository = cryptoRepository;
     }
 
-    public void generateAndInsertCryptos() {
-        cryptoRepository.generateAndInsertCryptos();
+    public List<Crypto> generateAndInsertCryptos() {
+        return cryptoRepository.generateAndInsertCryptos();
     }
 
-    public List<Crypto> getAllCryptos() {
-        return cryptoRepository.getAllCryptos();
-    }
-
-    public List<Crypto> getAllLatestCryptos() {
-        return cryptoRepository.getAllLatestCryptos();
+    public List<Crypto> getCryptoLast() {
+        return cryptoRepository.getCryptoLast();
     }
 
     public Crypto getCryptoById(int id) {

@@ -1,4 +1,5 @@
 package model;
+import java.sql.Timestamp;
 import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +10,7 @@ public class Crypto {
     int id;
     String nom;
     Double valeur;
-    Date date;
+    Timestamp date;
 
     public Crypto(){
         

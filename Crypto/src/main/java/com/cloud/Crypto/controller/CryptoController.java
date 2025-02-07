@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cryptos")
+@RequestMapping("/crypto")
 public class CryptoController {
 
     private final CryptoService cryptoService;
@@ -18,20 +18,14 @@ public class CryptoController {
     }
 
     @PostMapping("/generer")
-    public ResponseEntity<Void> generateCryptos() {
-        cryptoService.generateAndInsertCryptos();
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Crypto>> getAllCryptos() {
-        List<Crypto> cryptos = cryptoService.getAllCryptos();
+    public ResponseEntity<List<Crypto>> generateCryptos() {
+        List<Crypto> cryptos= cryptoService.generateAndInsertCryptos();
         return ResponseEntity.ok(cryptos);
     }
 
-    @GetMapping("/latest")
+    @GetMapping("/")
     public ResponseEntity<List<Crypto>> getAllLatestCryptos() {
-        List<Crypto> cryptos = cryptoService.getAllLatestCryptos();
+        List<Crypto> cryptos = cryptoService.getCryptoLast();
         return ResponseEntity.ok(cryptos);
     }
 

@@ -26,4 +26,8 @@ public class CryptoService {
     public Crypto getCryptoById(int id) {
         return cryptoRepository.getById(id);
     }
+
+    public List<Crypto> getHistorique(int id) {
+        return cryptoRepository.getHistorique(id);
+    }
 }

@@ -87,6 +87,12 @@ public class CryptoRepository {
         return jdbcTemplate.queryForObject(sql, getCryptoRowMapper(), id);
     }
 
+    public List<Crypto> getHistorique (int id) {
+        String sql = "SELECT * FROM v_crypto_historique WHERE id=?";
+        return jdbcTemplate.query(sql, getCryptoRowMapper(), id);
+    }
+    
+
     
 
 

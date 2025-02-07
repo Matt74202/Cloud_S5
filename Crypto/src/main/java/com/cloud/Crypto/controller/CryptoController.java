@@ -34,4 +34,10 @@ public class CryptoController {
         Crypto crypto = cryptoService.getCryptoById(id);
         return crypto != null ? ResponseEntity.ok(crypto) : ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/{id}/historique")
+    public ResponseEntity<List<Crypto>> getHistorique (@PathVariable int id) {
+        List<Crypto> cryptos = cryptoService.getHistorique(id);
+        return ResponseEntity.ok(cryptos);
+    }
 }

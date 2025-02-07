@@ -16,6 +16,18 @@ WHERE
         WHERE v2.id_crypto = c.id  -- Lien avec la crypto courante
     );
 
+---------------------------------------------------Historique des valeurs des cryptos---------------------------------------------------------
+CREATE OR REPLACE VIEW v_crypto_historique AS
+SELECT 
+    c.id, 
+    c.nom, 
+    v.valeur, 
+    v.date
+FROM 
+    Crypto c
+JOIN 
+    ValeurCrypto v ON c.id = v.id_crypto ;
+
 
 -----------------------------------------Valeur totale de cryptomonnaie qu'un user possede----------------------------------------------------
 CREATE OR REPLACE VIEW v_portefeuille_user AS

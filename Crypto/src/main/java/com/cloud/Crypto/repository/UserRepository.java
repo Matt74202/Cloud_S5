@@ -30,7 +30,7 @@ public class UserRepository {
 
     public void Inscription(User user) {
         String sql = "INSERT INTO Utilisateur (nom, email, mdp) VALUES (?, ?, ?)"; 
-        jdbcTemplate.update(sql, user.getNom(), user.getMail(), user.getMdp());
+        jdbcTemplate.update(sql, user.getNom(), user.getEmail(), user.getMdp());
         System.out.println("User registered successfully.");
     }
 

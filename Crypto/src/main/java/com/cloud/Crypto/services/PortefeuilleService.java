@@ -22,4 +22,8 @@ public class PortefeuilleService {
         return portefeuilleRepository.getPortefeuille(userId);
     }
 
+    public Portefeuille getPortefeuilleFiltre(int userId, int idCrypto){
+        return portefeuilleRepository.getPortefeuilleFiltre(userId, idCrypto);
+    }
+
 }

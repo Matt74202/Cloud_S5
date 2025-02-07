@@ -56,6 +56,12 @@ public class UserController {
         return ResponseEntity.ok(portefeuille);
     }
 
+    @GetMapping("/{userId}/portefeuille/{idCrypto}")
+    public ResponseEntity<Portefeuille> getUserPortefeuilleFiltre(@PathVariable int userId, @PathVariable int idCrypto) {
+        Portefeuille portefeuille = portefeuilleService.getPortefeuilleFiltre(userId, idCrypto);
+        return ResponseEntity.ok(portefeuille);
+    }
+
     @GetMapping("/{userId}/portefeuille/valeur")
     public ResponseEntity<Double> getUserPortefeuilleValeur(@PathVariable int userId) {
         Double valeur = userService.getValeurPortefeuille(userId);

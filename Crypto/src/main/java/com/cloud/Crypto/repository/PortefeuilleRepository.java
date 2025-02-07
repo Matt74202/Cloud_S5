@@ -28,6 +28,7 @@ public class PortefeuilleRepository {
             port.setUser(user);
             port.setSolde(rs.getDouble("solde"));
             Crypto crypto= cryptoRepository.getById(rs.getInt("id_crypto"));
+            port.setCrypto(crypto);
             return port;
         };
            
@@ -41,6 +42,11 @@ public class PortefeuilleRepository {
     public List<Portefeuille> getPortefeuille(int userId) {
         String sql = "SELECT* FROM Portefeuille WHERE id_utilisateur=?";
         return jdbcTemplate.query(sql, getPortefeuilleRowMapper(), userId);
+    }
+
+    public Portefeuille getPortefeuilleFiltre(int userId, int idCrypto){
+        String sql = "SELECT* FROM Portefeuille WHERE id_utilisateur=? AND id_crypto=?";
+        return jdbcTemplate.queryForObject(sql, getPortefeuilleRowMapper(), new Object[]{userId, idCrypto});
     }
 
 

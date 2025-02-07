@@ -5,7 +5,7 @@ import model.Crypto;
 import model.Fond;
 import model.TransactionFond;
 import model.TransactionCrypto;
-import model.User;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +24,6 @@ public class UserService {
 
     public User login(String email, String mdp) {
         return userRepository.login(email, mdp);
-    }
-
-    public List<Crypto> getPortefeuille(int userId) {
-        return userRepository.getPortefeuille(userId);
     }
 
     public Fond getFond(int userId) {

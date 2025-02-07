@@ -2,38 +2,31 @@ package com.cloud.Crypto.repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import lombok.AllArgsConstructor;
 import model.*;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
-
+@AllArgsConstructor
 @Repository
 public class UserRepository {
      private final JdbcTemplate jdbcTemplate;
-     private final CryptoRepository cryptoRepository;
      private final FondRepository fondRepository;
      private final TransactionFondRepository transactionFondRepository;
      private final TransactionCryptoRepository transactionCryptoRepository;
 
-    public UserRepository(CryptoRepository cryptoRepository,FondRepository fondRepository,TransactionFondRepository transactionFondRepository,TransactionCryptoRepository transactionCryptoRepository,JdbcTemplate jdbcTemplate) {
-        this.cryptoRepository = cryptoRepository;
-        this.fondRepository = fondRepository;
-        this.transactionFondRepository=transactionFondRepository;
-        this.transactionCryptoRepository=transactionCryptoRepository;
-        this.jdbcTemplate = jdbcTemplate;
-    }
     
     private RowMapper<User> getUserRowMapper() {
         return (rs, rowNum) -> new User(
             rs.getInt("id"),
             rs.getString("nom"),
             rs.getString("email"),
-            null, 
+            rs.getString("mdp"), 
             null  
         );
         
     }
-
 
     public void Inscription(User user) {
         String sql = "INSERT INTO Utilisateur (nom, email, mdp) VALUES (?, ?, ?)"; 
@@ -70,15 +63,6 @@ public class UserRepository {
         User user = jdbcTemplate.queryForObject(sql, getUserRowMapper(), new Object[]{email, mdp});
         return user;
     }
-    
-    public List<Crypto> getPortefeuille(int userId) {
-        String sql = "SELECT c.id, c.nom, c.valeur, c.date, p.quantite " +
-                     "FROM Portefeuille p " +
-                     "JOIN Crypto c ON p.idCrypto = c.id " +
-                     "WHERE p.id_utilisateur = ?";
-
-        return jdbcTemplate.query(sql, cryptoRepository.getCryptoRowMapper(), userId);
-    }
 
     public Fond getFond(int idUser){
         String sql="SELECT *from Fond where id_utilisateur=?";
@@ -100,6 +84,11 @@ public class UserRepository {
     public List<User> getAll() {
         String sql = "SELECT * FROM Utilisateur";  
         return jdbcTemplate.query(sql, getUserRowMapper());
+    }
+
+    public User getById(int id) {
+        String sql = "SELECT * FROM Utilisateur WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, getUserRowMapper(), id);
     }
     
 

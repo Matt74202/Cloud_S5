@@ -1,12 +1,12 @@
 package com.cloud.Crypto.controller;
 
-import com.cloud.Crypto.service.UserService;
+import com.cloud.Crypto.service.*;
 import com.cloud.Crypto.dto.*;
 import model.Crypto;
 import model.Fond;
 import model.TransactionFond;
 import model.TransactionCrypto;
-import model.User;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserService userService;
+    private final PortefeuilleService portefeuilleService;
 
 
     @GetMapping("/")
@@ -48,8 +49,8 @@ public class UserController {
 
 
     @GetMapping("/{userId}/portefeuille")
-    public ResponseEntity<List<Crypto>> getUserPortefeuille(@PathVariable int userId) {
-        List<Crypto> portefeuille = userService.getPortefeuille(userId);
+    public ResponseEntity<List<Portefeuille>> getUserPortefeuille(@PathVariable int userId) {
+        List<Portefeuille> portefeuille = portefeuilleService.getPortefeuille(userId);
         return ResponseEntity.ok(portefeuille);
     }
 

@@ -1,52 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/contenu.css" rel="stylesheet">
     <link href="../css/menu.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="../js/ListeTransaction.js"></script>
 
     <title>Liste Transactions</title>
 </head>
-<body>
+<body ng-controller="ListeTransactionController">
     <div id="menu-container"></div>
 
-    <form action="./MouvementServlet" method="get">
+    <form >
         <div class="recherche-produits row g-3" id="contenu">
             <div class="col-md-3" id="input-recherche">
-                <select name="crypto" id="floatingMontant" class="form-control">
-                    <option value="bitcoin">Bitcoin</option>
-                    <option value="ethereum">Ethereum</option>
-                    <option value="ripple">Ripple</option>
-                    <option value="litecoin">Litecoin</option>
-                    <option value="chainlink">Chainlink</option>
-                    <option value="cardano">Cardano</option>
-                    <option value="polkadot">Polkadot</option>
-                    <option value="stellar">Stellar</option>
-                    <option value="dogecoin">Dogecoin</option>
-                    <option value="solana">Solana</option>
+                <label style="color: white;">Cryptomonnaie: </label>
+                <select name="crypto" id="floatingMontant" class="form-control" ng-model="idCrypto">
+                    <option ng-repeat="crypto in cryptos" ng-value="crypto.id">{{ crypto.nom }}</option>
                 </select>
             </div>
 
             <div class="col-md-3" id="input-recherche">
-                <select name="type" id="floatingMontant" class="form-control">
-                    <option value="Vente">Vente</option>
-                    <option value="Achat">Achat</option>
+                <label style="color: white;">Type Transaction: </label>
+                <select name="type" id="floatingMontant" class="form-control" ng-model="idType">
+                    <option ng-value="1">Vente</option>
+                    <option ng-value="2">Achat</option>
                 </select>
             </div>
 
             <div class="col-md-3" id="input-recherche">
-                <select name="user" id="floatingMontant" class="form-control">
-                    <option value="User 1">User 1</option>
-                    <option value="User 2">User 2</option>
-                    <option value="User 3">User 3</option>
-                    <option value="User 4">User 4</option>
+                <label style="color: white;">Utilisateur: </label>
+                <select name="user" id="floatingMontant" class="form-control" ng-model="idUser">
+                    <option ng-repeat="user in users" ng-value="user.id">{{ user.nom }}</option>
                 </select>
             </div>
 
             <div class="col-md-3" id="input-recherche">
-                <button type="submit" class="btn btn-primary">Filtrer</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Filtrer</button>
             </div>
         </div>
     </form>
@@ -64,39 +57,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>User 1</td>
-                        <td>Vente</td>
-                        <td>Bitcoin</td>
-                        <td>0.5</td>
-                        <td>2025-02-01</td>
-                    </tr>
-                    <tr>
-                        <td>User 2</td>
-                        <td>Achat</td>
-                        <td>Ethereum</td>
-                        <td>2.0</td>
-                        <td>2025-02-03</td>
-                    </tr>
-                    <tr>
-                        <td>User 3</td>
-                        <td>Vente</td>
-                        <td>Ripple</td>
-                        <td>1000</td>
-                        <td>2025-02-04</td>
-                    </tr>
-                    <tr>
-                        <td>User 4</td>
-                        <td>Achat</td>
-                        <td>Litecoin</td>
-                        <td>50</td>
-                        <td>2025-02-05</td>
-                    </tr>
-                    <tr>
-                        <td>User 1</td>
-                        <td>Vente</td>
-                        <td>Cardano</td>
-                        <td>300</td>
-                        <td>2025-02-06</td>
+                        <tr ng-repeat="trans in transactions">
+                            <td scope="col">{{ trans.user.nom }}</td>
+                            <td scope="col">{{ trans.type.type }}</td>
+                            <td scope="col">{{ trans.crypto.nom }}</td>
+                            <td scope="col">{{ trans.quantite }}</td>
+                            <td scope="col">{{ trans.date }}</td>
+                        </tr>
                     </tr>
                 </tbody>
                 
@@ -106,10 +73,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         fetch('../menu.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('menu-container').innerHTML = data;
-        });
+            .then(response => response.text())
+            .then(data => {
+                var menuContainer = document.getElementById('menu-container');
+                menuContainer.innerHTML = data;
+
+                var $scope = angular.element(menuContainer).scope();
+                angular.element(menuContainer).injector().get('$compile')(menuContainer)($scope);
+
+                $scope.$digest();
+            });
     </script>
 </body>
 </html>

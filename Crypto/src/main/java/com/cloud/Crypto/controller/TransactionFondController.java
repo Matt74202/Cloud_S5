@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/transaction")
+@RequestMapping("/transaction/fond")
 public class TransactionFondController {
 
     private final TransactionFondService transactionFondService;

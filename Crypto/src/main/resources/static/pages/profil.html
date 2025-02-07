@@ -32,7 +32,7 @@
 
             <div ng-if="filteredPortefeuilles.length > 0">
                 <p ng-repeat="portefeuille in filteredPortefeuilles">
-                    {{ portefeuille.crypto.nom }} : ${{ portefeuille.solde * portefeuille.crypto.valeur }}
+                    {{ portefeuille.crypto.nom }} : ${{ portefeuille.solde * portefeuille.crypto.valeur | number:2 }}
                 </p>
             </div>
 

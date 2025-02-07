@@ -77,8 +77,10 @@ public class UserRepository {
     }
 
     public TransactionCrypto makeTransactionCrypto(int idUser, TransactionCrypto transaction) {
-        String sql = "INSERT INTO MouvementCrypto (id_utilisateur, date, id_type, montant, id_crypto, etat) VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType().getId(), transaction.getMontant(), transaction.getCrypto().getId(), transaction.getEtat());
+        String sql = "INSERT INTO MouvementCrypto (id_utilisateur, date, id_type, quantite, id_crypto, etat) VALUES (?, ?, ?, ?, ?, ?)";
+        User user= getById(idUser);
+        transaction.setUser(user);
+        jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType().getId(), transaction.getQuantite(), transaction.getCrypto().getId(), transaction.getEtat());
         return transaction;
     }
 

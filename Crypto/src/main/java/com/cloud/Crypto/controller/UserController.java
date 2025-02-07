@@ -25,7 +25,7 @@ public class UserController {
 
     private final UserService userService;
     private final PortefeuilleService portefeuilleService;
-
+    private final CryptoService cryptoService;
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getAll(){
@@ -95,11 +95,36 @@ public class UserController {
         return ResponseEntity.ok(newTransaction);
     }
 
-
-
     @PostMapping("/{userId}/transaction/crypto")
-    public ResponseEntity<TransactionCrypto> makeTransactionCrypto(@PathVariable int userId, @RequestBody TransactionCrypto transaction) {
+    public ResponseEntity<?> makeTransactionCrypto(@PathVariable int userId, @RequestBody Map<String, Object> payload) {
+        int idTypeTransaction = (int) payload.get("idType");
+        Date date = Date.valueOf((String) payload.get("date"));
+        int idCrypto = (int) payload.get("idCrypto");
+        double quantite = ((Number) payload.get("quantite")).doubleValue();
+
+        if (idTypeTransaction == 1) { // Achat
+            Crypto cryptoValeur= cryptoService.getCryptoById(idCrypto);
+            double totalCost = cryptoValeur.getValeur() * quantite;
+                
+            Fond fond = userService.getFond(userId);
+            if (fond.getSolde() < totalCost) {
+                return ResponseEntity.status(400).body("Solde insuffisant pour effectuer cette transaction.");
+            }
+        } 
+
+        else if (idTypeTransaction == 2) { // Vente
+        Portefeuille portefeuille= portefeuilleService.getPortefeuilleFiltre(userId, idCrypto);
+                
+            if (portefeuille == null || portefeuille.getSolde() < quantite) {
+                return ResponseEntity.status(400).body("Crypto insuffisant pour effectuer cette transaction.");
+            } 
+        }
+
+        TransactionCrypto transaction= new TransactionCrypto(date, idTypeTransaction, idCrypto, quantite);
         TransactionCrypto newTransaction = userService.makeTransactionCrypto(userId, transaction);
+            
         return ResponseEntity.ok(newTransaction);
     }
+
+
 }

@@ -13,7 +13,16 @@ public class TransactionCrypto {
     User user;
     Date date;
     TypeTransaction type;
-    double montant;
+    double quantite;
     Crypto crypto;
     String etat;
+
+    public TransactionCrypto(Date date, int idTypeTransaction, int idCrypto, double quantite) {
+        this.date = date;
+        this.type = new TypeTransaction(idTypeTransaction, "");
+        this.quantite = quantite;
+        this.crypto = new Crypto(); 
+        this.crypto.setId(idCrypto); 
+        this.etat = "en attente";
+    }
 }

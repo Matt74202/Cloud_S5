@@ -10,6 +10,7 @@ import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import model.ApiResponse;
 
 import java.util.List;
 
@@ -31,9 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/inscription")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
         userService.inscription(user);
-        return ResponseEntity.ok("User registered successfully.");
+        //ApiResponse response= new ApiResponse("success", "Utilisateur cree avec succes", null);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/login")

@@ -1,4 +1,5 @@
 package com.cloud.Crypto.repository;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,8 +14,6 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UserRepository {
      private final JdbcTemplate jdbcTemplate;
      private final FondRepository fondRepository;
-     private final TransactionFondRepository transactionFondRepository;
-     private final TransactionCryptoRepository transactionCryptoRepository;
 
     
     private RowMapper<User> getUserRowMapper() {
@@ -70,14 +69,16 @@ public class UserRepository {
     }
 
     public TransactionFond makeTransactionFond(int idUser, TransactionFond transaction) {
-        String sql = "INSERT INTO MouvementFond (id_user, date, type, montant, etat) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO MouvementFond (id_utilisateur, date, id_type, montant, etat) VALUES (?, ?, ?, ?, ?)";
+        User user= getById(idUser);
+        transaction.setUser(user);
         jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType().getId(), transaction.getMontant(), transaction.getEtat());
         return transaction; 
     }
 
     public TransactionCrypto makeTransactionCrypto(int idUser, TransactionCrypto transaction) {
-        String sql = "INSERT INTO MouvementCrypto (id_user, date, type, montant, id_crypto, etat) VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType(), transaction.getMontant(), transaction.getCrypto().getId(), transaction.getEtat());
+        String sql = "INSERT INTO MouvementCrypto (id_utilisateur, date, id_type, montant, id_crypto, etat) VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType().getId(), transaction.getMontant(), transaction.getCrypto().getId(), transaction.getEtat());
         return transaction;
     }
 

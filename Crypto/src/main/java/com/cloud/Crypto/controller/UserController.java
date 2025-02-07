@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import model.ApiResponse;
 
 import java.util.List;
+import java.util.Map;
+import java.sql.Date;
 
 import lombok.RequiredArgsConstructor;
 
@@ -75,10 +77,25 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/transaction/fond")
-    public ResponseEntity<TransactionFond> makeTransactionFond(@PathVariable int userId, @RequestBody TransactionFond transaction) {
+    public ResponseEntity<?> makeTransactionFond(@PathVariable int userId, @RequestBody Map<String, Object> payload) {
+        int idTypeTransaction = (int) payload.get("idType");
+        Date date = Date.valueOf((String) payload.get("date"));  
+        double montant = ((Number) payload.get("montant")).doubleValue();
+
+        Fond fond = userService.getFond(userId);
+        double soldeFond = fond.getSolde(); 
+
+        if (idTypeTransaction == 2 && montant > soldeFond) {
+            return ResponseEntity.status(400).body("Solde insuffisant pour effectuer cette transaction.");
+        }
+
+        TransactionFond transaction = new TransactionFond(date, idTypeTransaction, montant);
         TransactionFond newTransaction = userService.makeTransactionFond(userId, transaction);
+
         return ResponseEntity.ok(newTransaction);
     }
+
+
 
     @PostMapping("/{userId}/transaction/crypto")
     public ResponseEntity<TransactionCrypto> makeTransactionCrypto(@PathVariable int userId, @RequestBody TransactionCrypto transaction) {

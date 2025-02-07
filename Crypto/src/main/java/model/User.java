@@ -12,7 +12,14 @@ public class User {
     String mdp;
     String role;
 
+    public User(){} 
+    
     public User(int id ){
         this.id=id;
+    }
+
+    public User(String mail, String mdp){
+        this.mail= mail;
+        this.mdp= mdp;
     }
 }

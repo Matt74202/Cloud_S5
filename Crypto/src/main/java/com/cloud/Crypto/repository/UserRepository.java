@@ -22,6 +22,7 @@ public class UserRepository {
         this.transactionCryptoRepository=transactionCryptoRepository;
         this.jdbcTemplate = jdbcTemplate;
     }
+    
     private RowMapper<User> getUserRowMapper() {
         return (rs, rowNum) -> new User(
             rs.getInt("id"),
@@ -32,39 +33,44 @@ public class UserRepository {
         );
         
     }
-    public void Inscription(User user) {
-        String sql = "INSERT INTO Utilisateur (nom, email, mdp) VALUES (?, ?, ?)";
-        String hashedPassword = BCrypt.hashpw(user.getMdp(), BCrypt.gensalt());  
 
-        jdbcTemplate.update(sql, user.getNom(), user.getMail(), hashedPassword);
+
+    public void Inscription(User user) {
+        String sql = "INSERT INTO Utilisateur (nom, email, mdp) VALUES (?, ?, ?)"; 
+        jdbcTemplate.update(sql, user.getNom(), user.getMail(), user.getMdp());
         System.out.println("User registered successfully.");
     }
 
+    // public User login(String email, String mdp) {
+    //     String sql = "SELECT * FROM Utilisateur WHERE email = ? AND mdp=?";
+
+    //     try {
+    //         User user = jdbcTemplate.queryForObject(sql, getUserRowMapper(), email);
+
+    //         if (user != null && BCrypt.checkpw(mdp, getStoredPassword(email))) {
+    //             return user;
+    //         }
+    //     } catch (Exception e) {
+    //         return null; 
+    //     }
+    //     return null;
+    // }
+
+    // private String getStoredPassword(String email) {
+    //     String sql = "SELECT mdp FROM Utilisateur WHERE email = ?";
+    //     try {
+    //         return jdbcTemplate.queryForObject(sql, String.class, email);
+    //     } catch (Exception e) {
+    //         return null;
+    //     }
+    // }
+
     public User login(String email, String mdp) {
-        String sql = "SELECT * FROM Utilisateur WHERE email = ?";
-
-        try {
-            User user = jdbcTemplate.queryForObject(sql, getUserRowMapper(), email);
-
-            if (user != null && BCrypt.checkpw(mdp, getStoredPassword(email))) {
-                return user;
-            }
-        } catch (Exception e) {
-            return null; 
-        }
-        return null;
+        String sql = "SELECT * FROM Utilisateur WHERE email = ? AND mdp = ?";
+        User user = jdbcTemplate.queryForObject(sql, getUserRowMapper(), new Object[]{email, mdp});
+        return user;
     }
-
-
-    private String getStoredPassword(String email) {
-        String sql = "SELECT mdp FROM Utilisateur WHERE email = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, String.class, email);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
+    
     public List<Crypto> getPortefeuille(int userId) {
         String sql = "SELECT c.id, c.nom, c.valeur, c.date, p.quantite " +
                      "FROM Portefeuille p " +
@@ -79,16 +85,23 @@ public class UserRepository {
         return jdbcTemplate.queryForObject(sql,fondRepository.getFondRowMapper(),idUser);
     }
 
-    public TransactionFond makeTransactionFond(TransactionFond transaction){
-        String sql="Insert into MouvementFond (id_user,date,type,montant,id_crypto,etat) values (?,?,?,?,?,?) ";
-        return jdbcTemplate.queryForObject(sql,transactionFondRepository.getTransactionFondRowMapper(),transaction);
+    public TransactionFond makeTransactionFond(int idUser, TransactionFond transaction) {
+        String sql = "INSERT INTO MouvementFond (id_user, date, type, montant, etat) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType().getId(), transaction.getMontant(), transaction.getEtat());
+        return transaction; 
     }
 
-    public TransactionCrypto makeTransactionCrypto(TransactionCrypto transaction){
-        String sql="Insert into MouvementCrypto (id_user,date,type,montant,id_crypto,etat) values (?,?,?,?,?,?) ";
-        return jdbcTemplate.queryForObject(sql,transactionCryptoRepository.getTransactionCryptoRowMapper(),transaction);
+    public TransactionCrypto makeTransactionCrypto(int idUser, TransactionCrypto transaction) {
+        String sql = "INSERT INTO MouvementCrypto (id_user, date, type, montant, id_crypto, etat) VALUES (?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType(), transaction.getMontant(), transaction.getCrypto().getId(), transaction.getEtat());
+        return transaction;
     }
 
+    public List<User> getAll() {
+        String sql = "SELECT * FROM Utilisateur";  
+        return jdbcTemplate.query(sql, getUserRowMapper());
+    }
+    
 
 
 

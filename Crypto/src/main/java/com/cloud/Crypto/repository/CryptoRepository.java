@@ -3,6 +3,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.sql.Date;
 import java.util.Random;
 
 import javax.sql.DataSource;
@@ -10,6 +11,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import model.*;
+import java.util.Collections;
+
 
 import java.util.ArrayList;
 
@@ -91,20 +94,26 @@ public class CryptoRepository {
         String sql = "SELECT * FROM v_crypto_historique WHERE id=?";
         return jdbcTemplate.query(sql, getCryptoRowMapper(), id);
     }
+
+    public List<Crypto> getCryptoBetweenDateAndList(Date dateMin, Date dateMax, List<Integer> cryptoIds) {
+        String inSql = String.join(",", Collections.nCopies(cryptoIds.size(), "?"));
+        String sql = "SELECT * FROM v_crypto_historique WHERE date >= ? AND date <= ? AND id IN (" + inSql + ")";
+        
+        Object[] params = new Object[cryptoIds.size() + 2];
+        params[0] = dateMin;
+        params[1] = dateMax;
+
+        for (int i = 0; i < cryptoIds.size(); i++) {
+            params[i + 2] = cryptoIds.get(i);
+        }
+        
+        return jdbcTemplate.query(sql, getCryptoRowMapper(), params);
+    }
     
-
+    public List<Crypto> getCryptoBetweenDate(Date dateMin, Date dateMax) {
+        String sql = "SELECT * FROM v_crypto_historique WHERE date >= ? AND date <= ?";
+        return jdbcTemplate.query(sql, getCryptoRowMapper(), dateMin, dateMax);
+    }
     
-
-
-    
-
-
-
-
-    
-
-
-
-
-    
+       
 }

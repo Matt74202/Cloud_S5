@@ -14,6 +14,8 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UserRepository {
      private final JdbcTemplate jdbcTemplate;
      private final FondRepository fondRepository;
+     private final TypeTransactionRepository typeRepository;
+     private final CryptoRepository cryptoRepository;
 
     
     private RowMapper<User> getUserRowMapper() {
@@ -80,6 +82,10 @@ public class UserRepository {
         String sql = "INSERT INTO MouvementCrypto (id_utilisateur, date, id_type, quantite, id_crypto, etat) VALUES (?, ?, ?, ?, ?, ?)";
         User user= getById(idUser);
         transaction.setUser(user);
+        TypeTransaction type= typeRepository.getById(transaction.getType().getId());
+        transaction.setType(type);
+        Crypto crypto= cryptoRepository.getById(transaction.getCrypto().getId());
+        transaction.setCrypto(crypto);
         jdbcTemplate.update(sql, idUser, transaction.getDate(), transaction.getType().getId(), transaction.getQuantite(), transaction.getCrypto().getId(), transaction.getEtat());
         return transaction;
     }

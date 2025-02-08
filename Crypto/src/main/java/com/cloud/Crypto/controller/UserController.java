@@ -10,7 +10,6 @@ import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import model.ApiResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ public class UserController {
     private final UserService userService;
     private final PortefeuilleService portefeuilleService;
     private final CryptoService cryptoService;
+    private final FavoriService favoriService;
 
     @GetMapping("/")
     public ResponseEntity<List<User>> getAll(){
@@ -50,7 +50,6 @@ public class UserController {
             return ResponseEntity.status(401).body(null); 
         }
     }
-
 
     @GetMapping("/{userId}/portefeuille")
     public ResponseEntity<List<Portefeuille>> getUserPortefeuille(@PathVariable int userId) {
@@ -124,6 +123,24 @@ public class UserController {
         TransactionCrypto newTransaction = userService.makeTransactionCrypto(userId, transaction);
             
         return ResponseEntity.ok(newTransaction);
+    }
+
+    @PostMapping("/{userId}/favori")
+    public ResponseEntity<Favori> insertFavori(@PathVariable int userId, @RequestBody int idCrypto) {
+        Favori favori= favoriService.insertFavori(userId, idCrypto);
+        return ResponseEntity.ok(favori);
+    }
+
+    @GetMapping("/{userId}/favori")
+    public ResponseEntity<List<Favori>> getAllFavori(@PathVariable int userId) {
+        List<Favori> favoris= favoriService.getAllFavori(userId);
+        return ResponseEntity.ok(favoris);
+    }
+
+    @PostMapping("/{userId}/pdp")
+    public ResponseEntity<User> changerPdp(@PathVariable int userId, @RequestBody String image) {
+        User user= userService.changerPdp(userId, image);
+        return ResponseEntity.ok(user);
     }
 
 

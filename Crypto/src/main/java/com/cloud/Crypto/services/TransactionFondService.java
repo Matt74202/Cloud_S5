@@ -21,4 +21,12 @@ public class TransactionFondService {
         return transactionFondRepository.getAllFiltre(dateMax);
     }
 
+    public List<TransactionFond> getAllNonValides(){
+        return transactionFondRepository.getAllNonValides();
+    }
+
+    public TransactionFond validerTransaction(int idTransaction) {
+        return transactionFondRepository.valider(idTransaction);
+    }
+
 }

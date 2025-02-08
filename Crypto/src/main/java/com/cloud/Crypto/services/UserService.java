@@ -1,6 +1,7 @@
 package com.cloud.Crypto.service;
 
 import com.cloud.Crypto.repository.UserRepository;
+import com.cloud.Crypto.repository.FavoriRepository;
 import model.Crypto;
 import model.Fond;
 import model.TransactionFond;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final FavoriRepository favoriRepository;
 
     public void inscription(User user) {
         userRepository.Inscription(user);
@@ -44,5 +46,9 @@ public class UserService {
 
     public double getValeurPortefeuille(int idUser){
         return userRepository.getValeurPortefeuille(idUser);
+    }
+
+    public User changerPdp(int idUser, String image){
+        return userRepository.changerPdp(idUser, image);
     }
 }

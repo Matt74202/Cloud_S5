@@ -38,6 +38,12 @@ public class TransactionCryptoController {
         return ResponseEntity.ok(transactions);
     }
 
+    @GetMapping("/filtre/user/{id}")
+    public ResponseEntity<List<TransactionCrypto>> getAllByUser(@RequestParam int idUser) {
+        List<TransactionCrypto> transactions = transactionCryptoService.getAllByUser(idUser);
+        return ResponseEntity.ok(transactions);
+    }
+
     @GetMapping("/filtre")
     public ResponseEntity<List<TransactionCrypto>> getFilteredTransactions(
             @RequestParam(value = "idCrypto", defaultValue = "0") Integer idCrypto,
@@ -46,6 +52,19 @@ public class TransactionCryptoController {
         
         // Call the service method with the filtered parameters
         List<TransactionCrypto> transactions = transactionCryptoService.getAllTransactionsFiltre(idCrypto, idType, idUtilisateur);
+        
+        // Return the filtered transactions
+        return ResponseEntity.ok(transactions);
+    }
+
+    @GetMapping("/filtre/multi")
+    public ResponseEntity<List<TransactionCrypto>> getFilteredTransactions(
+            @RequestParam("dateMax") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateMax,
+            @RequestParam(value = "idUtilisateur", defaultValue = "0") Integer idUtilisateur,
+            @RequestParam(value = "idCrypto", defaultValue = "0") Integer idCrypto) {
+        
+        // Call the service method with the filtered parameters
+        List<TransactionCrypto> transactions = transactionCryptoService.getAllTransactionsFiltre(dateMax, idUtilisateur, idCrypto);
         
         // Return the filtered transactions
         return ResponseEntity.ok(transactions);

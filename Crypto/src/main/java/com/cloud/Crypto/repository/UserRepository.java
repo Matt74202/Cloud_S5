@@ -24,6 +24,7 @@ public class UserRepository {
             rs.getString("nom"),
             rs.getString("email"),
             rs.getString("mdp"), 
+            null,
             null  
         );
         
@@ -103,6 +104,15 @@ public class UserRepository {
     public double getValeurPortefeuille (int id) {
         String sql= "SELECT valeur_totale FROM v_portefeuille_user WHERE utilisateur_id=?";
         return jdbcTemplate.queryForObject(sql, Double.class, id);
+    }
+
+
+    public User changerPdp(int idUser, String image) {
+        User user= getById(idUser);
+        String sql = "UPDATE Utilisateur SET pdp = ? WHERE id = ?";
+        jdbcTemplate.update(sql, image, idUser);
+        user.setPdp(image);
+        return user;
     }
     
 

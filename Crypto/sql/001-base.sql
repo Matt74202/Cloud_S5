@@ -7,8 +7,13 @@ CREATE TABLE Utilisateur(
 
 CREATE TABLE Crypto(
     id SERIAL PRIMARY KEY,
-    nom VARCHAR(30) NOT NULL,
-    valeur DECIMAL,
+    nom VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE ValeurCrypto(
+    id SERIAL PRIMARY KEY,
+    id_crypto INT REFERENCES Crypto(id),
+    valeur DECIMAL NOT NULL,
     date TIMESTAMP
 );
 
@@ -22,7 +27,7 @@ CREATE TABLE Portefeuille(
     id SERIAL PRIMARY KEY,
     id_utilisateur INT REFERENCES Utilisateur(id),
     solde DECIMAL,
-    idCrypto int references Crypto(id)
+    id_crypto int references Crypto(id)
 );
 
 CREATE TABLE TypeTransaction(
@@ -35,8 +40,10 @@ CREATE TABLE MouvementCrypto(
     id_utilisateur INT REFERENCES Utilisateur(id),
     id_type INT REFERENCES TypeTransaction(id),
     date TIMESTAMP,
-    idCrypto int references Crypto(id),
-    montant DECIMAL
+    id_crypto int references Crypto(id),
+    quantite DECIMAL,
+    montant DECIMAL,
+    etat VARCHAR(30)
 );
 
 CREATE TABLE MouvementFond(
@@ -44,8 +51,8 @@ CREATE TABLE MouvementFond(
     id_utilisateur INT REFERENCES Utilisateur(id),
     id_type INT REFERENCES TypeTransaction(id),
     date TIMESTAMP,
-    idFond int references Fond(id),
-    montant DECIMAL
+    montant DECIMAL,
+    etat VARCHAR(30)
 );
 
 CREATE TABLE TypeAnalyse(

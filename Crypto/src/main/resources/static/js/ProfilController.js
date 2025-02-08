@@ -19,7 +19,7 @@ app.controller('ProfilController', ['$scope', '$http', function($scope, $http) {
     };
 
     $scope.loadCryptos = function() {
-        $http.get('http://localhost:8088/cryptos')
+        $http.get('http://localhost:8088/crypto/')
             .then(function(response) {
                 $scope.cryptos = response.data;
             })

@@ -8,11 +8,18 @@ import lombok.Data;
 public class User {
     int id;
     String nom;
-    String mail;
+    String email;
     String mdp;
     String role;
 
+    public User(){} 
+    
     public User(int id ){
         this.id=id;
+    }
+
+    public User(String email, String mdp){
+        this.email= email;
+        this.mdp= mdp;
     }
 }

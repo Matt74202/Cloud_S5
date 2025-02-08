@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,97 +7,78 @@
     <link href="../css/contenu.css" rel="stylesheet">
     <link href="../css/menu.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="../js/AnalyseController.js"></script>
     <title>Analyse</title>
 </head>
-<body ng-app="analyseApp" ng-controller="AnalyseController">
+<body ng-controller="AnalyseController">
     <div id="menu-container"></div>
 
     <form ng-submit="analyser()">
         <div class="recherche-produits row g-3" id="contenu">
             <div class="col-md-3" id="input-recherche">
                 <label style="color: white;">Type d'analyse</label>
-                <select name="crypto" id="floatingMontant" class="form-control">
-                    <option value="1er quartile">1er quartile</option>
-                    <option value="Max">Max</option>
-                    <option value="Min">Min</option>
-                    <option value="Moyenne">Moyenne</option>
-                    <option value="Ecart-type">Ecart-type</option>
+                <select ng-model="analyse.type" class="form-control">
+                    <option ng-value="1">1er quartile</option>
+                    <option ng-value="2">Max</option>
+                    <option ng-value="3">Min</option>
+                    <option ng-value="4">Moyenne</option>
+                    <option ng-value="5">Ecart-type</option>
                 </select>
             </div>
-
+    
             <div class="col-md-3" id="input-recherche">
                 <label style="color: white;">Date min: </label>
-                <input type="date" placeholder="date1" name="date1" class="form-control">
+                <input type="date" ng-model="analyse.dateMin" class="form-control" required>
             </div>
-
+    
             <div class="col-md-3" id="input-recherche">
                 <label style="color: white;">Date max: </label>
-                <input type="date" placeholder="date1" name="date2" class="form-control">
+                <input type="date" ng-model="analyse.dateMax" class="form-control" required>
             </div>
         </div>
-
+    
         <div class="checkbox-container d-flex justify-content-center flex-wrap" id="contenu">
             <div class="form-check me-3">
-                <input type="checkbox" class="form-check-input custom-checkbox" ng-model="analyse.tous" id="tous">
+                <input type="checkbox" class="form-check-input custom-checkbox" 
+                       ng-model="analyse.tous" 
+                       ng-change="toggleTous()" 
+                       id="tous">
                 <label class="form-check-label" for="tous">Tous</label>
             </div>
             <div class="form-check me-3" ng-repeat="crypto in cryptos">
-                <input type="checkbox" class="form-check-input custom-checkbox" ng-model="analyse.cryptos[crypto]" id="{{crypto}}">
-                <label class="form-check-label" for="{{crypto}}">{{crypto}}</label>
+                <input type="checkbox" class="form-check-input custom-checkbox" 
+                       ng-model="analyse.cryptos[crypto.id]" 
+                       ng-change="checkTous()" 
+                       id="{{crypto.id}}">
+                <label class="form-check-label" for="{{crypto.id}}">{{crypto.nom}}</label>
             </div>
         
             <div class="col-md-3" id="recherche-analyse">
                 <button type="submit" class="btn btn-primary">Analyser</button>
             </div>
         </div>
-               
-
     </form>
-
+    
     <div class="resultat mt-5" ng-if="resultat">
         <center>
-        <h3 class="resultat-titre">Résultat de l'Analyse</h3>
-        <h3>{{resultat}}</h3>
+            <h3 class="resultat-titre">Résultat de l'Analyse</h3>
+            <h3>{{resultat | number:2}}</h3>
         </center>
     </div>
-    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        var app = angular.module('analyseApp', []);
-        app.controller('AnalyseController', function($scope) {
-            $scope.cryptos = ['Bitcoin', 'Ethereum', 'Ripple', 'Litecoin', 'Chainlink', 'Cardano', 'Polkadot', 'Stellar', 'Dogecoin', 'Solana'];
-            $scope.analyse = {
-                type: '',
-                cryptos: {},
-                dateMin: '',
-                dateMax: '',
-                tous: false
-            };
-
-            $scope.analyser = function() {
-                // // Simuler une analyse et afficher des résultats fictifs
-                // let analyseType = $scope.analyse.type;
-                // let selectedCryptos = $scope.analyse.tous ? $scope.cryptos : Object.keys($scope.analyse.cryptos).filter(crypto => $scope.analyse.cryptos[crypto]);
-                // let dateMin = $scope.analyse.dateMin;
-                // let dateMax = $scope.analyse.dateMax;
-
-                // $scope.resultats = [
-                //     `Type d'analyse: ${analyseType}`,
-                //     `Cryptomonnaies sélectionnées: ${selectedCryptos.join(', ')}`,
-                //     `Date minimum: ${dateMin}`,
-                //     `Date maximum: ${dateMax}`
-                // ];
-
-                $scope.resultat= "12000";
-            };
-        });
-
         fetch('../menu.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('menu-container').innerHTML = data;
-        });
+            .then(response => response.text())
+            .then(data => {
+                var menuContainer = document.getElementById('menu-container');
+                menuContainer.innerHTML = data;
+
+                var $scope = angular.element(menuContainer).scope();
+                angular.element(menuContainer).injector().get('$compile')(menuContainer)($scope);
+
+                $scope.$digest();
+            });
     </script>
 </body>
 </html>

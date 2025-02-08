@@ -12,10 +12,21 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'DM Sans LightItalic';
+    src: url('../font/static/DMSans_18pt-ExtraLightItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+.nav{
+    margin-left: 300px;
 }
 
 /* Styles du menu fixe */
@@ -29,7 +40,7 @@
     z-index: 1000;
     align-items: center;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between; /* Adjusted to space items from each other */
     margin-bottom: 200px;
 }
 
@@ -103,4 +114,45 @@
 .menu-fixe .nav ul li .submenu li a:hover {
     background-color: #444;  /* Couleur de fond lors du survol du sous-menu */
     border-radius: 5px;
+}
+
+/* Section utilisateur connecté à droite du menu */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;  /* Ensures user info is on the far right */
+    margin-right: 10px;
+}
+
+.user-info .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: green; /* Vert pour "en ligne" */
+    animation: pulse 1s infinite ease-in-out;
+    margin-right: 8px;  /* Adds spacing between the point and the name */
+}
+
+.user-name {
+    font-weight: bold;
+    color: #fff;
+    font-size: smaller;
+    text-transform: none;
+    font-family: 'DM Sans LightItalic';
+}
+
+/* Animation pour faire pulser le point */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        background-color: green;
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: #4CAF50; /* Légèrement plus clair pour l'effet */
+    }
+    100% {
+        transform: scale(1);
+        background-color: green;
+    }
 }

@@ -8,14 +8,19 @@ services:
     ports:
       - "8088:8088"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Définir des profils Spring (facultatif)
+      - SPRING_PROFILES_ACTIVE=dev
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/crypto  
       - SPRING_DATASOURCE_USERNAME=crypto  
       - SPRING_DATASOURCE_PASSWORD=crypto  
+    volumes:
+      - ./src/main/resources/static:/app/src/main/resources/static  # Pour les fichiers web
+      - ./src/main/java:/app/src/main/java  # Pour les fichiers Java backend
+      - ./target:/app/target
     networks:
       - spring-boot-network
     depends_on:
       - db
+
 
   db:
     image: postgres:15  # Image de PostgreSQL 15

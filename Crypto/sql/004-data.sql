@@ -51,4 +51,6 @@ INSERT INTO TypeAnalyse (type) VALUES
 ('moyenne'),
 ('ecart-type');
 
+INSERT INTO Commission(pourcentage_vente, pourcentage_achat, date) VALUES (5, 5, CURRENT_TIMESTAMP);
+
 

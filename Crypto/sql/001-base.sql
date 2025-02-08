@@ -63,7 +63,8 @@ CREATE TABLE TypeAnalyse(
 CREATE TABLE Commission(
     id SERIAL PRIMARY KEY,
     pourcentage_vente DECIMAL,
-    pourcentage_achat DECIMAL
+    pourcentage_achat DECIMAL,
+    date TIMESTAMP
 );
 
 CREATE TABLE Admin(

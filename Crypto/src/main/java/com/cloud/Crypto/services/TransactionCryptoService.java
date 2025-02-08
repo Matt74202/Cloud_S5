@@ -24,4 +24,8 @@ public class TransactionCryptoService {
         return transactionCryptoRepository.getAllFiltre(dateMax);
     }
 
+    public List<TransactionCrypto> getAllTransactionsFiltre(Integer idCrypto, Integer idType, Integer idUtilisateur) {
+        return transactionCryptoRepository.getAllFiltre(idCrypto, idType, idUtilisateur);
+    }
+
 }

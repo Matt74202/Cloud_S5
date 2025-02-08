@@ -14,26 +14,29 @@
 <body ng-controller="ListeTransactionController">
     <div id="menu-container"></div>
 
-    <form >
+    <form ng-submit="getAllTransactions()">
         <div class="recherche-produits row g-3" id="contenu">
             <div class="col-md-3" id="input-recherche">
                 <label style="color: white;">Cryptomonnaie: </label>
-                <select name="crypto" id="floatingMontant" class="form-control" ng-model="idCrypto">
+                <select name="crypto" id="floatingMontant" class="form-control" ng-model="formData.idCrypto">
+                    <option ng-value="0"></option>
                     <option ng-repeat="crypto in cryptos" ng-value="crypto.id">{{ crypto.nom }}</option>
                 </select>
             </div>
 
             <div class="col-md-3" id="input-recherche">
                 <label style="color: white;">Type Transaction: </label>
-                <select name="type" id="floatingMontant" class="form-control" ng-model="idType">
-                    <option ng-value="1">Vente</option>
-                    <option ng-value="2">Achat</option>
+                <select name="type" id="floatingMontant" class="form-control" ng-model="formData.idType">
+                    <option ng-value="0"></option>
+                    <option ng-value="1">Achat</option>
+                    <option ng-value="2">Vente</option>
                 </select>
             </div>
 
             <div class="col-md-3" id="input-recherche">
                 <label style="color: white;">Utilisateur: </label>
-                <select name="user" id="floatingMontant" class="form-control" ng-model="idUser">
+                <select name="user" id="floatingMontant" class="form-control" ng-model="formData.idUtilisateur">
+                    <option ng-value="0"></option>
                     <option ng-repeat="user in users" ng-value="user.id">{{ user.nom }}</option>
                 </select>
             </div>

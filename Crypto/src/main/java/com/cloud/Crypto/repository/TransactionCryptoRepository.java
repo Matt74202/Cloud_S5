@@ -54,4 +54,20 @@ public class TransactionCryptoRepository {
         return jdbcTemplate.query(sql, getTransactionCryptoRowMapper(), dateMax);
     }
 
+    public List<TransactionCrypto> getAllFiltre(Integer idCrypto, Integer idType, Integer idUtilisateur) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM MouvementCrypto WHERE 1=1");
+    
+        if (idCrypto != null && idCrypto > 0) {
+            sql.append(" AND id_crypto = ").append(idCrypto);
+        }
+        if (idType != null && idType > 0) {
+            sql.append(" AND id_type = ").append(idType);
+        }
+        if (idUtilisateur != null && idUtilisateur > 0) {
+            sql.append(" AND id_utilisateur = ").append(idUtilisateur);
+        }
+    
+        return jdbcTemplate.query(sql.toString(), getTransactionCryptoRowMapper());
+    }
+    
 }

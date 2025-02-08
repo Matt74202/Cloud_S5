@@ -12,7 +12,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "ios": {
       "infoPlist": {
         "NSCameraUsageDescription": "This app needs access to your camera to take profile pictures."
@@ -20,14 +23,24 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": ["CAMERA"],
+      "permissions": [
+        "CAMERA"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "minSdkVersion": 28,
+      "package": "com.matt742.CryptoMobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d563a54b-027d-4fb0-b344-145c959ed956"
+      }
+    },
+    "owner": "matt742"
   }
 }

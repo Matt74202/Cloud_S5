@@ -57,9 +57,9 @@ JOIN
 JOIN 
     v_crypto_last v ON m.id_crypto = v.id
 JOIN 
-    TypeTransaction t ON m.id = t.id
+    TypeTransaction t ON m.id_type = t.id
 WHERE 
-    t.id = 2  
+    m.id_type = 2  
 GROUP BY 
     u.id, u.nom;
 
@@ -76,9 +76,9 @@ JOIN
 JOIN 
     v_crypto_last v ON m.id_crypto = v.id
 JOIN 
-    TypeTransaction t ON m.id = t.id
+    TypeTransaction t ON m.id_type = t.id
 WHERE 
-    t.id = 1
+    m.id_type = 1
 GROUP BY 
     u.id, u.nom;
 

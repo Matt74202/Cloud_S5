@@ -6,10 +6,6 @@ CREATE TABLE Utilisateur(
     pdp VARCHAR(30)
 );
 
-ALTER TABLE Utilisateur
-ADD COLUMN pdp VARCHAR(30);
-
-
 CREATE TABLE Crypto(
     id SERIAL PRIMARY KEY,
     nom VARCHAR(30) NOT NULL

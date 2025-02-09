@@ -1,4 +1,5 @@
 package model;
+import java.sql.Timestamp;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class Crypto implements FirestoreSyncable {
     int id;
     String nom;
     Double valeur;
-    Date date;
+    Timestamp date;
 
     public Crypto(){
         

@@ -17,11 +17,13 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: symfony
-      POSTGRES_PASSWORD: symfony
-      POSTGRES_DB: symfony
+      POSTGRES_USER: cloud
+      POSTGRES_PASSWORD: cloud
+      POSTGRES_DB: cloud
     ports:
       - "5432:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
 
 volumes:
   db_data:

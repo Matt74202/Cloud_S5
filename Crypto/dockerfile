@@ -1,0 +1,31 @@
+# Utiliser une image de base Java
+FROM openjdk:17-jdk-slim AS build
+
+# Installer Maven dans l'image
+RUN apt-get update && apt-get install -y maven
+
+# Répertoire de travail
+WORKDIR /app
+
+# Copier le fichier pom.xml et télécharger les dépendances Maven
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copier tout le projet et construire avec Maven
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Utiliser une image plus légère pour exécuter l'application
+FROM openjdk:17-jdk-slim
+
+# Créer un répertoire pour l'application
+WORKDIR /app
+
+# Copier le JAR généré à partir de l'étape de build
+COPY --from=build /app/target/*.jar app.jar
+
+# Exposer le port utilisé par l'application Spring Boot (par défaut 8080)
+EXPOSE 8088
+
+# Commande pour exécuter l'application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -1,0 +1,158 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../font/static/Montserrat-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('../font/static/Montserrat-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DM Sans LightItalic';
+    src: url('../font/static/DMSans_18pt-ExtraLightItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.nav{
+    margin-left: 300px;
+}
+
+/* Styles du menu fixe */
+.menu-fixe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #121212;  /* Fond du menu principal */
+    z-index: 1000;
+    align-items: center;
+    display: flex;
+    justify-content: space-between; /* Adjusted to space items from each other */
+    margin-bottom: 200px;
+}
+
+.menu-fixe .nav {
+    margin-right: 40px;
+    text-transform: uppercase;
+    font-family: 'Montserrat Bold';
+}
+
+.menu-fixe .nav ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+.menu-fixe .nav ul li {
+    display: inline-block;
+    position: relative;  /* Permet de positionner le dropdown correctement */
+    margin: 0 15px;
+}
+
+.menu-fixe .nav ul li a {
+    color: #fff;  /* Couleur du texte */
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Style du survol des éléments principaux */
+.menu-fixe .nav ul li a:hover {
+    background-color: #2f2c2c;  /* Couleur du fond lors du survol */
+    border-radius: 5px;
+}
+
+/* Styles du dropdown */
+.menu-fixe .nav ul li .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;  /* Fond du sous-menu */
+    padding: 0;
+    border-radius: 5px;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    width: auto;  /* Largeur automatique */
+}
+
+/* Affiche le sous-menu lorsqu'un item est survolé */
+.menu-fixe .nav ul li:hover .submenu {
+    display: block;
+}
+
+/* Style des éléments du sous-menu */
+.menu-fixe .nav ul li .submenu li {
+    display: block;
+    margin: 0;
+}
+
+/* Style des liens dans le sous-menu */
+.menu-fixe .nav ul li .submenu li a {
+    color: #fff;  /* Couleur du texte */
+    text-decoration: none;
+    padding: 8px 15px;  /* Espacement pour chaque élément */
+    display: block;
+    font-size: small;
+    transition: background-color 0.3s ease;
+}
+
+/* Style au survol des éléments du sous-menu */
+.menu-fixe .nav ul li .submenu li a:hover {
+    background-color: #444;  /* Couleur de fond lors du survol du sous-menu */
+    border-radius: 5px;
+}
+
+/* Section utilisateur connecté à droite du menu */
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;  /* Ensures user info is on the far right */
+    margin-right: 10px;
+}
+
+.user-info .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: green; /* Vert pour "en ligne" */
+    animation: pulse 1s infinite ease-in-out;
+    margin-right: 8px;  /* Adds spacing between the point and the name */
+}
+
+.user-name {
+    font-weight: bold;
+    color: #fff;
+    font-size: smaller;
+    text-transform: none;
+    font-family: 'DM Sans LightItalic';
+}
+
+/* Animation pour faire pulser le point */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        background-color: green;
+    }
+    50% {
+        transform: scale(1.2);
+        background-color: #4CAF50; /* Légèrement plus clair pour l'effet */
+    }
+    100% {
+        transform: scale(1);
+        background-color: green;
+    }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/contenu.css" rel="stylesheet">
+    <link href="../css/menu.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="../js/TransactionCryptoController.js"></script>
+
+    <title>Transaction Crypto</title>
+</head>
+<body ng-controller="TransactionCryptoController">
+    <div id="menu-container"></div>
+
+    <div class="form-container">
+        <form class="formulaire col-6" ng-submit="submitForm()">
+            <h1 class="h3 mb-3 fw-normal"> Achat / Vente de crypto </h1>
+            
+            <div class="form-floating">
+                <select name="type" id="floatingMontant" class="form-control" ng-model="idUser">
+                    <option ng-repeat="u in users" ng-value="u.id">{{ u.nom }}</option>
+                </select>
+                <label for="floatingType"> Utilisateur </label>
+            </div>
+
+            <div class="form-floating">
+                <select name="type" id="floatingMontant" class="form-control" ng-model="formData.idType">
+                    <option ng-value="1">Achat</option>
+                    <option ng-value="2">Vente</option>
+                </select>
+                <label for="floatingType">Type de mouvement </label>
+            </div>
+
+            <div class="form-floating">
+                <select name="type" id="floatingMontant" class="form-control" ng-model="formData.idCrypto">
+                    <option ng-repeat="c in cryptos" ng-value="c.id">{{ c.nom }}</option>
+                </select>
+                <label for="floatingType"> Cryptomonnaie </label>
+            </div>
+            
+            <div class="form-floating">
+                <input type="number" class="form-control" id="floatingMontant" placeholder="quantite" ng-model="formData.quantite">
+                <label for="floatingMontant">Quantite </label>
+            </div>
+
+            <div class="form-floating">
+                <input type="date" class="form-control" id="floatingDate" placeholder="Password" ng-model="formData.date">
+                <label for="floatingDate">Date du mouvement</label>
+            </div>
+
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Ins&eacute;rer</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        fetch('../menu.html')
+            .then(response => response.text())
+            .then(data => {
+                var menuContainer = document.getElementById('menu-container');
+                menuContainer.innerHTML = data;
+
+                var $scope = angular.element(menuContainer).scope();
+                angular.element(menuContainer).injector().get('$compile')(menuContainer)($scope);
+
+                $scope.$digest();
+            });
+    </script>
+</body>
+</html>

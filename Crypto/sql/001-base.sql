@@ -2,7 +2,8 @@ CREATE TABLE Utilisateur(
     id SERIAL PRIMARY KEY, 
     nom VARCHAR(30),
     email VARCHAR(50) NOT NULL,
-    mdp VARCHAR(255) NOT NULL
+    mdp VARCHAR(255) NOT NULL,
+    pdp VARCHAR(30)
 );
 
 CREATE TABLE Crypto(

@@ -11,9 +11,6 @@ INSERT INTO Utilisateur (nom, email, mdp) VALUES
 ('User 9', 'usercloudexemple@gmail.com', 'user9'),
 ('User 10', 'usercloudexemple@gmail.com', 'user10');
 
-INSERT INTO Utilisateur (nom, email, mdp)
-VALUES ('Mimi', 'test@gmail.com', digest('123', 'sha256'));
-
 INSERT INTO Crypto (nom)
 VALUES 
     ('Bitcoin'),

@@ -36,12 +36,31 @@ public class TransactionFondRepository {
     }
 
     public List<TransactionFond> getAll() {
-        String sql = "SELECT * FROM TransactionFond";  
+        String sql = "SELECT * FROM MouvementFond";  
         return jdbcTemplate.query(sql, getTransactionFondRowMapper());
     }
     
     public List<TransactionFond> getAllFiltre(Date dateMax) {
-        String sql = "SELECT * FROM TransactionFond WHERE date <= ?";
+        String sql = "SELECT * FROM MouvementFond WHERE date <= ?";
         return jdbcTemplate.query(sql, getTransactionFondRowMapper(), dateMax);
     }
+
+    public List<TransactionFond> getAllNonValides() {
+        String sql = "SELECT * FROM MouvementFond WHERE etat='en attente'";  
+        return jdbcTemplate.query(sql, getTransactionFondRowMapper());
+    }
+
+    public TransactionFond getById(int id) {
+        String sql = "SELECT * FROM MouvementFond WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, getTransactionFondRowMapper(), id);
+    }
+
+    public TransactionFond valider(int idTransaction) {
+        String updateQuery = "UPDATE MouvementFond SET etat = 'valide' WHERE id = ?";
+        jdbcTemplate.update(updateQuery, idTransaction);
+        TransactionFond transaction= getById(idTransaction);
+        transaction.setEtat("valide");
+        return transaction;
+    }
+    
 }

@@ -54,6 +54,27 @@ public class TransactionCryptoRepository {
         return jdbcTemplate.query(sql, getTransactionCryptoRowMapper(), dateMax);
     }
 
+    public List<TransactionCrypto> getAllByUser(int idUser) {
+        String sql = "SELECT * FROM MouvementCrypto WHERE id_utilisateur = ?";
+        return jdbcTemplate.query(sql, getTransactionCryptoRowMapper(), idUser);
+    }
+
+    public List<TransactionCrypto> getAllFiltre(Date dateMax, Integer idUser, Integer idCrypto) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM MouvementCrypto WHERE 1=1");
+    
+        if (idCrypto != null && idCrypto > 0) {
+            sql.append(" AND id_crypto = ").append(idCrypto);
+        }
+        if (dateMax!=null) {
+            sql.append(" AND date<= ").append(dateMax);
+        }
+        if (idUser != null && idUser > 0) {
+            sql.append(" AND id_utilisateur = ").append(idUser);
+        }
+    
+        return jdbcTemplate.query(sql.toString(), getTransactionCryptoRowMapper());
+    }
+
     public List<TransactionCrypto> getAllFiltre(Integer idCrypto, Integer idType, Integer idUtilisateur) {
         StringBuilder sql = new StringBuilder("SELECT * FROM MouvementCrypto WHERE 1=1");
     

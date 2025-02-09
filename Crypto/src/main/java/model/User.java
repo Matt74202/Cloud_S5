@@ -11,6 +11,7 @@ public class User {
     String email;
     String mdp;
     String role;
+    String pdp;
 
     public User(){} 
     

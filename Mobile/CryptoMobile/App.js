@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import UserProfile from './components/UserProfile';
 import CryptoList from './components/CryptoList';
 import Portfolio from './components/Portfolio';
@@ -20,10 +20,12 @@ export default function App() {
         <LoginScreen onLogin={handleLogin} />
       ) : (
         <>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
           <UserProfile />
           <CryptoList />
           <Portfolio />
           <TransactionActions />
+      </ScrollView>
         </>
       )}
     </View>

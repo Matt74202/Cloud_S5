@@ -1,22 +1,34 @@
 // CryptoList.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, StyleSheet, Alert } from 'react-native';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase'; // Assure-toi que ce chemin est correct
 
 export default function CryptoList() {
   const [cryptos, setCryptos] = useState([]);
   const [favorite, setFavorite] = useState(null);
 
   useEffect(() => {
-    setCryptos([
-      { id: '1', name: 'Bitcoin', price: '$23,000' },
-      { id: '2', name: 'Ethereum', price: '$1,500' },
-      { id: '3', name: 'Ripple', price: '$0.50' },
-    ]);
+    // Fonction pour récupérer les cryptos depuis Firestore
+    const fetchCryptos = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Crypto'));
+        const cryptoList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setCryptos(cryptoList);
+      } catch (error) {
+        Alert.alert('Error', 'Unable to fetch cryptos.');
+      }
+    };
+
+    fetchCryptos(); // Appel de la fonction pour récupérer les cryptos
   }, []);
 
   const addToFavorite = (crypto) => {
     setFavorite(crypto);
-    Alert.alert('Favorite added', `${crypto.name} is now your favorite.`);
+    Alert.alert('Favorite added', `${crypto.nom} is now your favorite.`);
   };
 
   return (
@@ -27,7 +39,7 @@ export default function CryptoList() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.cryptoItem}>
-            <Text>{item.name} - {item.price}</Text>
+            <Text>{item.nom} </Text>
             <Button title="Favorite" onPress={() => addToFavorite(item)} />
           </View>
         )}

@@ -7,6 +7,9 @@ import com.google.firebase.FirebaseOptions;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class FirebaseInitializer {
     public void initializeFirebase() {
         try {

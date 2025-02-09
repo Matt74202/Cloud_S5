@@ -2,6 +2,7 @@ package com.cloud.Crypto.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import model.Crypto;
 import model.Fond;
@@ -10,6 +11,7 @@ import model.TransactionFond;
 import model.TypeTransaction;
 import model.User;
 
+@Repository
 public class TransactionCryptoRepository {
      private final JdbcTemplate jdbcTemplate;
 

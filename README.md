@@ -9,33 +9,30 @@ Membres:
     Ce projet a été réalisé dans le cadre de la validation du semestre 5. Il porte sur le développement d'une plateforme d'achat et de vente de cryptomonnaies, intégrant des technologies web avancées, du cloud computing et des applications mobiles.
 
 ## TECHNOLOGIES UTILISEES
-    ### Fournisseur d'identite: 
-        #### backend: Symfony 
-        #### base: Postgresql
+    -> Fournisseur d'identite: 
+        - backend: Symfony 
+        - base: Postgresql
     
-    ### Web:
-        #### backend: Spring-boot
-        #### front-end: html & angularJS
-        #### base: Postgresql
+    -> Web:
+        - backend: Spring-boot
+        - front-end: html & angularJS
+        - base: Postgresql
 
-    ### Mobile:
-        #### front-end: React-Native
+    -> Mobile:
+        - front-end: React-Native
 
-    ### Service cloud:
-        #### firebase (notifications)
+    -> Service cloud:
+        - firebase (notifications)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
 ## FOURNISSEUR D'IDENTITE (code source dans backend)
     - Installation du conteneur: 
-        ``` bash 
-        docker-compose up --build 
-        ```
+        . docker-compose up --build
+
     - Installation des dependances dans vendor (si necessaire)
-        ``` bash 
-        docker exec -it backend-app-1 bash
-        composer install
-        ```
+        . docker exec -it backend-app-1 bash
+        . composer install
 
     - La base aura comme user:'cloud', mot de passe:'cloud', database:'cloud'. 
        Les details sur les tables se trouvent dans backend/sql/base.sql
@@ -44,7 +41,7 @@ Membres:
         email: "usercloudexemple@gmail.com"
         mdp: "testcloud2025"
 
-    ### ROUTES POSTMAN :
+    -> ROUTES POSTMAN :
         - Inscription
             http://localhost:8000/api/inscription
         - Valider inscription   

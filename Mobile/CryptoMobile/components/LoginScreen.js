@@ -1,27 +1,32 @@
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { db } from '../firebase'; // Assure-toi que tu as bien configuré Firebase
 
 export default function LoginScreen({ onLogin }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user1@gmail.com'); // Valeur par défaut pour l'email
+  const [password, setPassword] = useState('123'); // Valeur par défaut pour le mot de passe
 
   const handleLogin = async () => {
     try {
-      // Exemple d'appel API
-      const response = await fetch('https://api.example.com/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const usersRef = collection(db, 'Utilisateur');
+      
+      const q = query(usersRef, where('email', '==', email));
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        Alert.alert('Login Failed', 'No user found with this email.');
+        return;
+      }
 
-      if (response.ok) {
-        const data = await response.json();
+      const userDoc = querySnapshot.docs[0];
+      const userData = userDoc.data();
+      
+      if (userData.mdp === password) {
         Alert.alert('Login Successful', 'You are logged in!');
-        onLogin(); // Redirige vers l'application principale
+        onLogin(); 
       } else {
-        Alert.alert('Login Failed', 'Please check your credentials.');
+        Alert.alert('Login Failed', 'Incorrect password.');
       }
     } catch (error) {
       Alert.alert('Error', 'Something went wrong.');

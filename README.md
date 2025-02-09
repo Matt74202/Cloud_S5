@@ -1,12 +1,11 @@
 # Projet final - Achat/Vente de cryptomonnaie
+ ----------------------------------------------------------------------------------------------------------------------------------------------
 
-Membres:
+## Membres:
     - RAMEFISON Matthew Herintsoa, ETU002774
     - ANDRIAMAMPIANINA Naly Malala Fitiavana, ETU001749
 
-## CONTEXTE
-
-    Ce projet a été réalisé dans le cadre de la validation du semestre 5. Il porte sur le développement d'une plateforme d'achat et de vente de cryptomonnaies, intégrant des technologies web avancées, du cloud computing et des applications mobiles.
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 ## TECHNOLOGIES UTILISEES
     -> Fournisseur d'identite: 

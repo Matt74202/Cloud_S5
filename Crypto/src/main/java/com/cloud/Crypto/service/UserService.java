@@ -2,10 +2,7 @@ package com.cloud.Crypto.service;
 
 import com.cloud.Crypto.repository.UserRepository;
 import com.cloud.Crypto.repository.FavoriRepository;
-import model.Crypto;
-import model.Fond;
-import model.TransactionFond;
-import model.TransactionCrypto;
+
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +16,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final FavoriRepository favoriRepository;
+    private final FirestoreService firebaseService; 
 
     public void inscription(User user) {
         userRepository.Inscription(user);
@@ -33,10 +31,12 @@ public class UserService {
     }
 
     public TransactionFond makeTransactionFond(int idUser, TransactionFond transaction) {
+        firebaseService.syncToFirestore(transaction);
         return userRepository.makeTransactionFond(idUser, transaction);
     }
 
     public TransactionCrypto makeTransactionCrypto(int idUser, TransactionCrypto transaction) {
+        firebaseService.syncToFirestore(transaction);
         return userRepository.makeTransactionCrypto(idUser, transaction);
     }
 

@@ -6,18 +6,18 @@ import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class Crypto implements FirestoreSyncable {
+@NoArgsConstructor
+public class Crypto implements FirestoreSyncable{
     int id;
     String nom;
     Double valeur;
     Timestamp date;
 
-    public Crypto(){
-        
-    }
+
 
     public Crypto(int int1) {
         //TODO Auto-generated constructor stub
@@ -27,11 +27,15 @@ public class Crypto implements FirestoreSyncable {
     public String getFirestoreCollectionName() {
         return "Crypto";
     }
+    
 
     @Override
     public Map<String, Object> toFirestoreMap() {
-        Map<Crypto> map= new HashMap<>();
-        
-        return null;
+        Map<String, Object> map= new HashMap<>();
+        if (id!= 0) map.put("id", id);
+        if (nom != null) map.put("nom", nom);
+        if (valeur != null) map.put("valeur", valeur);
+        if (date != null) map.put("date", date);
+        return map;
     }
 }

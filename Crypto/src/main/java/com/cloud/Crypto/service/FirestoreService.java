@@ -1,4 +1,4 @@
-package com.cloud.Crypto.services;
+package com.cloud.Crypto.service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -35,34 +35,56 @@ public class FirestoreService {
     private JdbcTemplate jdbcTemplate;
 
     
-    @PostConstruct
-    public void initialize() {
+
+//     public void initialize() {
+//     try {
+//         FileInputStream serviceAccount = new FileInputStream(serviceAccountKeyPath);
+//         FirebaseOptions options = FirebaseOptions.builder()
+//                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+//                 .build();
+        
+//         if (FirebaseApp.getApps().isEmpty()) {
+//             FirebaseApp.initializeApp(options);
+//         }
+//         db = FirestoreClient.getFirestore();
+//         listenToFirestoreChanges();
+//         logger.info("HUHUHU");
+//     } catch (IOException e) {
+//         logger.error("Error initializing Firestore", e);
+//     }
+// }
+@PostConstruct
+public void initialize() {
     try {
+        System.out.println("FirestoreService initialized"); // Check if this appears
         FileInputStream serviceAccount = new FileInputStream(serviceAccountKeyPath);
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
-        
+
         if (FirebaseApp.getApps().isEmpty()) {
             FirebaseApp.initializeApp(options);
         }
         db = FirestoreClient.getFirestore();
         listenToFirestoreChanges();
+        logger.info("HUHUHU");
     } catch (IOException e) {
         logger.error("Error initializing Firestore", e);
     }
 }
 
-    public <T extends FirestoreSyncable> void syncToFirestore(T entity) {
-        try {
-            db.collection(entity.getFirestoreCollectionName())
-                    .document(String.valueOf(entity.getId()))
-                    .set(entity.toFirestoreMap())
-                    .get();
-        } catch (Exception e) {
-            logger.error("Error syncing to Firestore", e);
-        }
+
+public <T extends FirestoreSyncable> void syncToFirestore(T entity) {
+    try {
+        // Remove manual ID mapping and let Firestore generate the ID
+        db.collection(entity.getFirestoreCollectionName())
+          .add(entity.toFirestoreMap()) // This generates a unique Firestore document ID
+          .get();
+    } catch (Exception e) {
+        logger.error("Error syncing to Firestore", e);
     }
+}
+
 
     public <T extends FirestoreSyncable> void deleteFromFirestore(T entity) {
         try {
@@ -76,14 +98,9 @@ public class FirestoreService {
     }
 
     private void listenToFirestoreChanges() {
-        listenToCollectionChanges("cryptocurrency");
-        listenToCollectionChanges("xe_history");
-        listenToCollectionChanges("transaction");
-        listenToCollectionChanges("sell_order");
-        listenToCollectionChanges("commission");
-        listenToCollectionChanges("cryptocurrency_wallet");
-        listenToCollectionChanges("ledger");
-        listenToCollectionChanges("user");
+        listenToCollectionChanges("MouvementCrypto");
+        listenToCollectionChanges("MouvementFond");
+
     }
 
     private void listenToCollectionChanges(String collectionName) {
@@ -105,6 +122,7 @@ public class FirestoreService {
             }
         });
     }
+    
 
     private void handleDocumentUpsert(DocumentSnapshot document, String tableName) {
         try {
@@ -129,7 +147,7 @@ public class FirestoreService {
             logger.error("Failed to handle document removal: " + document.getId(), e);
         }
     }
-
+    
     private void adjustTimestamps(Map<String, Object> data) {
         if (data.containsKey("timestamp")) {
             data.put("timestamp", convertToLocalDateTime(data.get("timestamp")));
@@ -153,4 +171,5 @@ public class FirestoreService {
         String placeholders = String.join(", ", data.keySet().stream().map(k -> "?").toArray(String[]::new));
         return "REPLACE INTO " + tableName + " (" + columns + ") VALUES (" + placeholders + ")";
     }
+    
 }

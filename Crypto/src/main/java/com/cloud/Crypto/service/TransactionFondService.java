@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TransactionFondService {
     private final TransactionFondRepository transactionFondRepository;
+    private final FirestoreService firebaseService; 
 
     public List<TransactionFond> getAll() {
         return transactionFondRepository.getAll();
